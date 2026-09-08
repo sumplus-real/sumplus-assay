@@ -32,6 +32,8 @@ const comptrollerAbi = new Interface([
   // three outputs stay unnamed: they are (error code, liquidity, shortfall).
   "function getAccountLiquidity(address account) view returns (uint256, uint256, uint256)",
   "function markets(address vToken) view returns (bool isListed, uint256 collateralFactorMantissa, bool isVenus)",
+  "function getAssetsIn(address account) view returns (address[])",
+  "function actionPaused(address,uint8) view returns (bool)",
 ]);
 
 const vTokenAbi = new Interface([
@@ -43,6 +45,8 @@ const vTokenAbi = new Interface([
   "function getCash() view returns (uint256)",
   "function exchangeRateStored() view returns (uint256)",
   "function underlying() view returns (address)",
+  "function balanceOf(address) view returns (uint256)",
+  "function borrowBalanceStored(address) view returns (uint256)",
 ]);
 
 async function read(iface: Interface, to: string, fn: string, args: unknown[] = []) {
@@ -192,15 +196,68 @@ export async function marketDetail(vToken: string): Promise<Market | null> {
 
 export type AccountLiquidity = {
   account: string;
+  /** Borrowing capacity still available, in dollars. */
   liquidity: number;
+  /** How far past the limit the account already is, in dollars. */
   shortfall: number;
-  /** Above 1 the account is safe. Below 1 it is liquidatable. */
-  healthFactor: number | null;
+  /** Every market the account has entered, with what it has borrowed there. */
+  positions: Array<{ vToken: string; symbol: string; supplied: number; borrowed: number }>;
+  /** What the account has borrowed across all markets, in dollars. */
+  totalBorrowedUsd: number;
 };
 
 export async function accountLiquidity(account: string): Promise<AccountLiquidity> {
   const got = await read(comptrollerAbi, VENUS_COMPTROLLER, "getAccountLiquidity", [account]);
   const liquidity = Number(formatUnits(got[1] as bigint, 18));
   const shortfall = Number(formatUnits(got[2] as bigint, 18));
-  return { account, liquidity, shortfall, healthFactor: null };
+
+  // Remaining capacity on its own cannot answer "how much has this account
+  // borrowed", and a tool that cannot answer the question it was given makes
+  // the agent look wrong for a gap on our side. Every market the account has
+  // touched is read here, borrows included.
+  const entered = (await read(comptrollerAbi, VENUS_COMPTROLLER, "getAssetsIn", [account]))[0] as string[];
+  const candidates = new Set<string>(entered.map(String));
+  for (const known of BORROWABLE_TO_CHECK) candidates.add(known);
+
+  const positions: AccountLiquidity["positions"] = [];
+  let totalBorrowedUsd = 0;
+  for (const vToken of candidates) {
+    try {
+      const [symbol, supplied, borrowed] = await Promise.all([
+        read(vTokenAbi, vToken, "symbol"),
+        read(vTokenAbi, vToken, "balanceOf", [account]),
+        read(vTokenAbi, vToken, "borrowBalanceStored", [account]),
+      ]);
+      const borrowedN = Number(formatUnits(borrowed[0] as bigint, 18));
+      const suppliedN = Number(formatUnits(supplied[0] as bigint, 8));
+      if (borrowedN === 0 && suppliedN === 0) continue;
+      positions.push({ vToken, symbol: String(symbol[0]), supplied: suppliedN, borrowed: borrowedN });
+      // Every market this account borrows in is a dollar stablecoin, so the
+      // amount is also the value. A non-stable borrow would need the oracle.
+      totalBorrowedUsd += borrowedN;
+    } catch {
+      /* a market that does not answer is not part of this account's position */
+    }
+  }
+
+  return { account, liquidity, shortfall, positions, totalBorrowedUsd };
+}
+
+/** Markets worth checking even when the account has not entered them, because borrowing does not require entering. */
+const BORROWABLE_TO_CHECK = [
+  "0xF06e662a00796c122AaAE935EC4F0Be3F74f5636", // vFDUSD
+  "0xb7526572FFE56AB9D7489838Bf2E18e3323b441A", // vUSDT
+  "0x08e0A5575De71037aE36AbfAfb516595fE68e5e4", // vBUSD
+];
+
+/** Venus action 0 is supplying. A paused market is not one a lender can use. */
+export async function supplyPaused(vToken: string): Promise<boolean> {
+  try {
+    const got = await read(comptrollerAbi, VENUS_COMPTROLLER, "actionPaused", [vToken, 0]);
+    return Boolean(got[0]);
+  } catch {
+    // Unknown is reported as paused, so an unreadable market is never
+    // recommended on the strength of a check that did not happen.
+    return true;
+  }
 }

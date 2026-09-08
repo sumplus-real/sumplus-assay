@@ -143,9 +143,12 @@ export const grid: Task = {
   title: "What a grid on this pool would actually earn",
   question:
     `Using the current price of the PancakeSwap v2 BUSD/WBNB pool on BNB Smart Chain testnet, plan a ${GRID_LEVELS}-level grid ` +
-    `spanning ${GRID_HALF_RANGE * 100}% either side of the price, for an inventory of ${INVENTORY_WBNB} WBNB. Report the ` +
-    `spacing between levels in BUSD, the WBNB placed at each level, what one crossing earns after the pool's ${POOL_FEE * 100}% fee, ` +
-    `and whether this pool trades often enough for the grid to be worth running.`,
+    `spanning ${GRID_HALF_RANGE * 100}% either side of the price, for an inventory of ${INVENTORY_WBNB} WBNB. ` +
+    `Levels are evenly spaced, so the spacing is the full range divided by ${GRID_LEVELS - 1}. The inventory is split evenly, ` +
+    `so each level holds ${INVENTORY_WBNB}/${GRID_LEVELS} WBNB. One crossing buys at a level and sells at the next, ` +
+    `so it earns the level size times the spacing, minus the pool's ${POOL_FEE * 100}% fee charged on the level's value at ` +
+    `the current price, once on the way in and once on the way out. Report the spacing in BUSD, the WBNB at each level, ` +
+    `the net BUSD from one crossing, and whether this pool trades often enough for the grid to be worth running.`,
 
   manualSteps: async () => [
     { where: `pair ${PAIR_BUSD_WBNB}`, action: "call getReserves and token0, as in the first task" },
@@ -213,9 +216,11 @@ export const health: Task = {
   category: "health",
   title: "How far this loan is from trouble",
   question:
-    `On Venus on BNB Smart Chain testnet, look at account ${WATCHED_ACCOUNT}. Report its remaining borrow capacity in dollars, ` +
-    `how much it has borrowed in dollars, its health factor as borrow limit divided by borrowed, and how far the collateral ` +
-    `price can fall before the position becomes liquidatable.`,
+    `On Venus on BNB Smart Chain testnet, look at account ${WATCHED_ACCOUNT}. Report its remaining borrow capacity in ` +
+    `dollars and how much it has borrowed in dollars. Its borrow limit is the remaining capacity plus what is already ` +
+    `borrowed, and its health factor is that borrow limit divided by what is borrowed. Report both, and report how far ` +
+    `the collateral price can fall before the position becomes liquidatable, which is one minus the reciprocal of the ` +
+    `health factor, as a percentage.`,
 
   manualSteps: async () => [
     { where: `BscScan testnet, comptroller ${VENUS_COMPTROLLER}`, action: "open the contract, Read tab" },
@@ -339,8 +344,16 @@ export const yieldTask: Task = {
     const notes: string[] = [];
     let hits = 0;
     const total = 3;
-    if (String(agent.bestSymbol ?? "").toLowerCase() === String(ref.bestSymbol).toLowerCase()) hits += 1;
-    else notes.push(`best market: said ${agent.bestSymbol}, reference ${ref.bestSymbol}`);
+    // The market is identified by its address when the agent gives one, because
+    // an address is unambiguous. A symbol is accepted with the vToken prefix
+    // ignored: "BNB" and "vBNB" name the same market, and marking that wrong
+    // would be scoring spelling rather than the answer.
+    const strip = (s: unknown) => String(s ?? "").trim().toLowerCase().replace(/^v/, "");
+    const sameAddress =
+      typeof agent.bestVToken === "string" &&
+      agent.bestVToken.toLowerCase() === String(ref.bestVToken).toLowerCase();
+    if (sameAddress || strip(agent.bestSymbol) === strip(ref.bestSymbol)) hits += 1;
+    else notes.push(`best market: said ${agent.bestSymbol ?? agent.bestVToken}, reference ${ref.bestSymbol}`);
     if (typeof agent.bestSupplyApy === "number" && near(agent.bestSupplyApy, ref.bestSupplyApy as number, 0.05)) hits += 1;
     else notes.push(`best APY: said ${agent.bestSupplyApy}, reference ${ref.bestSupplyApy}`);
     if (typeof agent.bestYearOn1000Usd === "number" && near(agent.bestYearOn1000Usd, ref.bestYearOn1000Usd as number, 0.05))

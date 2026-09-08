@@ -11,7 +11,7 @@
  */
 
 import { blockNumber, traffic } from "./rpc";
-import { poolState, recentSwaps, allMarkets, marketDetail } from "./onchain";
+import { poolState, recentSwaps, allMarkets, marketDetail, supplyPaused } from "./onchain";
 import { accountLiquidity } from "./onchain";
 import { DEFAULT_MANDATE, judgeSpend, judgeTool, type Mandate } from "./mandate";
 import { Ledger } from "./receipts";
@@ -78,7 +78,7 @@ const TOOLS = [
     function: {
       name: "venus_markets",
       description:
-        "Every market listed on the Venus comptroller on BNB Smart Chain testnet, each with its symbol, supply and borrow APY, available cash, borrows, utilisation and collateral factor.",
+        "Every market listed on the Venus comptroller on BNB Smart Chain testnet, each with its symbol, supply and borrow APY, available cash, utilisation, collateral factor, and whether supplying is paused.",
       parameters: { type: "object", properties: {}, required: [] },
     },
   },
@@ -87,7 +87,7 @@ const TOOLS = [
     function: {
       name: "account_liquidity",
       description:
-        "A Venus account's remaining borrow capacity and shortfall in dollars, plus what it has borrowed in each market.",
+        "A Venus account's remaining borrow capacity and shortfall in dollars, every market it holds a position in, what it has supplied and borrowed in each, and its total borrowed in dollars.",
       parameters: {
         type: "object",
         properties: { account: { type: "string", description: "The address to look up." } },
@@ -113,9 +113,13 @@ async function callTool(name: string, args: Record<string, unknown>): Promise<To
       case "venus_markets": {
         const addresses = await allMarkets();
         const rows = (await Promise.all(addresses.map(marketDetail))).filter(Boolean);
+        // Whether supplying is paused has to be in here. The task asks for the
+        // best market a lender can actually use, and without this field the
+        // agent is being marked against a rule it has no way to apply.
+        const paused = await Promise.all(rows.map((m) => supplyPaused(m!.vToken)));
         return {
           ok: true,
-          data: rows.map((m) => ({
+          data: rows.map((m, i) => ({
             symbol: m!.symbol,
             vToken: m!.vToken,
             supplyApy: Number(m!.supplyApy.toFixed(2)),
@@ -123,6 +127,7 @@ async function callTool(name: string, args: Record<string, unknown>): Promise<To
             cash: Number(m!.cash.toFixed(4)),
             utilisation: Number(m!.utilisation.toFixed(1)),
             collateralFactor: m!.collateralFactor,
+            supplyPaused: paused[i],
           })),
         };
       }
@@ -163,6 +168,40 @@ export function requestBody(config: ModelConfig, messages: Array<Record<string, 
   if (config.provider) body.saferouter = { provider: config.provider };
   return body;
 }
+
+/**
+ * One round trip to the gateway, retried.
+ *
+ * The local network drops TLS mid-request often enough that a single failure
+ * says nothing, so a transport error is retried. A refusal from the gateway
+ * itself is not: a 4xx is an answer, and retrying it would only spend money
+ * repeating a mistake.
+ */
+async function postWithRetry(config: ModelConfig, body: unknown, tries = 4): Promise<unknown> {
+  let last: unknown;
+  for (let attempt = 0; attempt < tries; attempt += 1) {
+    try {
+      const res = await fetch(`${config.baseUrl}/chat/completions`, {
+        method: "POST",
+        headers: { "content-type": "application/json", authorization: `Bearer ${config.apiKey}` },
+        body: JSON.stringify(body),
+        signal: AbortSignal.timeout(120_000),
+      });
+      if (res.status >= 400 && res.status < 500) {
+        throw new GatewayRefusal(`gateway answered ${res.status}: ${(await res.text()).slice(0, 300)}`);
+      }
+      if (!res.ok) throw new Error(`gateway answered ${res.status}: ${(await res.text()).slice(0, 300)}`);
+      return await res.json();
+    } catch (err) {
+      if (err instanceof GatewayRefusal) throw err;
+      last = err;
+      await new Promise((r) => setTimeout(r, 1200 * (attempt + 1)));
+    }
+  }
+  throw new Error(`gateway unreachable after ${tries} attempts: ${String(last)}`);
+}
+
+export class GatewayRefusal extends Error {}
 
 // ------------------------------------------------------------------- the run
 
@@ -216,13 +255,7 @@ export async function runAgent(
   let nudged = false;
 
   for (let round = 0; round < 8; round += 1) {
-    const res = await fetch(`${config.baseUrl}/chat/completions`, {
-      method: "POST",
-      headers: { "content-type": "application/json", authorization: `Bearer ${config.apiKey}` },
-      body: JSON.stringify(requestBody(config, messages)),
-    });
-    if (!res.ok) throw new Error(`gateway answered ${res.status}: ${(await res.text()).slice(0, 300)}`);
-    const body = (await res.json()) as {
+    const body = (await postWithRetry(config, requestBody(config, messages))) as {
       choices: Array<{ message: { content?: string; tool_calls?: Array<{ id: string; function: { name: string; arguments: string } }> } }>;
       usage?: { prompt_tokens?: number; completion_tokens?: number };
     };
