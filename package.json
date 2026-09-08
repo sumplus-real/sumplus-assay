@@ -11,7 +11,8 @@
     "start": "tsx web.ts",
     "test": "tsx --test tests/assay.test.ts",
     "assay": "tsx scripts/run-assays.ts",
-    "verify": "tsx scripts/verify-report.ts"
+    "verify": "tsx scripts/verify-report.ts",
+    "report": "tsx scripts/write-report-md.ts"
   },
   "dependencies": {
     "@types/node": "^26.5.0",

@@ -12,6 +12,11 @@ Built for **BNB Chain Build the Era**, aimed at the **TermiX** challenge.
 **Anchor contract:** [`0xdc3cec958Ac2bBaDA749EC4Cf49ac01507F5297B`](https://testnet.bscscan.com/address/0xdc3cec958Ac2bBaDA749EC4Cf49ac01507F5297B)
 on BNB Smart Chain testnet · **Demo:** `media/assay-demo.mp4`
 
+The Agent Advantage Report is committed as [`REPORT.md`](REPORT.md), with every
+task's answer printed field by field on both paths, the receipts behind each agent
+run, and the anchor for each. It is generated from the run rather than written up,
+so it cannot drift away from what was measured.
+
 ## What the measured run says
 
 |  | by hand | agent | matched | faster | crossover |
