@@ -3,7 +3,7 @@ import assert from "node:assert/strict";
 
 import { Ledger, verify } from "../lib/receipts";
 import { judgeSpend, judgeTool, judgeHost, usd, DEFAULT_MANDATE } from "../lib/mandate";
-import { estimateTokens, parseAnswer, runAgent } from "../lib/agent";
+import { estimateTokens, parseAnswer, requestBody, runAgent } from "../lib/agent";
 import { measureAssay } from "../lib/report";
 
 function chainOfThree() {
@@ -99,6 +99,46 @@ test("a response with no usage block is never priced at zero", async () => {
     assert.equal(run.usageReported, false, "a missing usage block must be flagged");
     assert.ok(run.moneyMicroUsd > 0, "a run with no usage block was priced at zero");
     assert.ok(run.promptTokens > 0);
+  } finally {
+    globalThis.fetch = realFetch;
+  }
+});
+
+test("the line is named in the request, because an unpinned run is priced against the wrong rate card", () => {
+  const body = requestBody(
+    { baseUrl: "u", apiKey: "k", model: "deepseek-v4-flash", provider: "cm", inputPerMillion: 0.14, outputPerMillion: 0.28 },
+    [{ role: "user", content: "hi" }]
+  ) as Record<string, unknown>;
+  assert.deepEqual(body.saferouter, { provider: "cm" });
+  // The catalogue id, not the display name: the suffixed form does not resolve.
+  assert.equal(body.model, "deepseek-v4-flash");
+  assert.ok(Array.isArray(body.tools) && (body.tools as unknown[]).length > 0);
+});
+
+test("whitespace is not an answer", async () => {
+  const realFetch = globalThis.fetch;
+  let calls = 0;
+  globalThis.fetch = (async () => {
+    calls += 1;
+    // This upstream line closes a tool-calling turn with "\n\n". Accepting that
+    // as the final answer would score the run at zero and blame the model.
+    const message = calls === 1 ? { role: "assistant", content: "\n\n" } : { role: "assistant", content: '{"price": 7}' };
+    return new Response(JSON.stringify({ choices: [{ message }], usage: { prompt_tokens: 10, completion_tokens: 2 } }), {
+      status: 200,
+      headers: { "content-type": "application/json" },
+    });
+  }) as typeof fetch;
+  try {
+    const run = await runAgent("q", ["price"], {
+      baseUrl: "u",
+      apiKey: "k",
+      model: "deepseek-v4-flash",
+      provider: "cm",
+      inputPerMillion: 0.14,
+      outputPerMillion: 0.28,
+    });
+    assert.equal(calls, 2, "the blank turn should have been followed by one more attempt");
+    assert.deepEqual(run.answer, { price: 7 });
   } finally {
     globalThis.fetch = realFetch;
   }

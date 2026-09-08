@@ -21,6 +21,13 @@ export type ModelConfig = {
   baseUrl: string;
   apiKey: string;
   model: string;
+  /**
+   * Which upstream line to use, by its internal provider name. The same model
+   * id is offered on several, and a run priced against one line while served by
+   * another is a run whose cost figure is fiction, so this is named rather than
+   * left to a default.
+   */
+  provider?: string;
   /** Dollars per million tokens, so a run can be priced from its own usage. */
   inputPerMillion: number;
   outputPerMillion: number;
@@ -33,9 +40,10 @@ export function modelFromEnv(): ModelConfig {
   return {
     baseUrl,
     apiKey,
-    model: process.env.SUMPLUS_MODEL ?? "gemini-2.5-flash-lite",
-    inputPerMillion: Number(process.env.SUMPLUS_INPUT_PER_M ?? 0.1),
-    outputPerMillion: Number(process.env.SUMPLUS_OUTPUT_PER_M ?? 0.4),
+    model: process.env.SUMPLUS_MODEL ?? "deepseek-v4-flash",
+    provider: process.env.SUMPLUS_PROVIDER ?? "cm",
+    inputPerMillion: Number(process.env.SUMPLUS_INPUT_PER_M ?? 0.14),
+    outputPerMillion: Number(process.env.SUMPLUS_OUTPUT_PER_M ?? 0.28),
   };
 }
 
@@ -130,6 +138,32 @@ async function callTool(name: string, args: Record<string, unknown>): Promise<To
   }
 }
 
+// --------------------------------------------------------------- the request
+
+/**
+ * The body sent to the gateway.
+ *
+ * The same model id is offered on three upstream lines at different context
+ * limits, and an unpinned request goes to whichever the gateway prefers. Naming
+ * the line is therefore part of the measurement: a run priced against one rate
+ * card while served by another reports a cost it did not incur.
+ *
+ * The line is named by its internal provider name in lower case, inside the
+ * `saferouter` object the gateway strips before forwarding. The display code in
+ * the catalogue, the `[C]` in a model's name, is not a request parameter, and
+ * the model field takes the bare catalogue id.
+ */
+export function requestBody(config: ModelConfig, messages: Array<Record<string, unknown>>) {
+  const body: Record<string, unknown> = {
+    model: config.model,
+    messages,
+    tools: TOOLS,
+    temperature: 0,
+  };
+  if (config.provider) body.saferouter = { provider: config.provider };
+  return body;
+}
+
 // ------------------------------------------------------------------- the run
 
 export type AgentRun = {
@@ -178,12 +212,14 @@ export async function runAgent(
   let answerText = "";
   /** False as soon as one round comes back without a usage block. */
   let usageReported = true;
+  /** The model gets one prompt to produce its answer before the run gives up. */
+  let nudged = false;
 
   for (let round = 0; round < 8; round += 1) {
     const res = await fetch(`${config.baseUrl}/chat/completions`, {
       method: "POST",
       headers: { "content-type": "application/json", authorization: `Bearer ${config.apiKey}` },
-      body: JSON.stringify({ model: config.model, messages, tools: TOOLS, temperature: 0 }),
+      body: JSON.stringify(requestBody(config, messages)),
     });
     if (!res.ok) throw new Error(`gateway answered ${res.status}: ${(await res.text()).slice(0, 300)}`);
     const body = (await res.json()) as {
@@ -264,7 +300,23 @@ export async function runAgent(
       continue;
     }
 
-    answerText = choice.content ?? "";
+    // This line answers a tool-calling turn with "\n\n" rather than an empty
+    // string, so "content is truthy" is not the same as "the model said
+    // something". Treating whitespace as an answer would score the run at zero
+    // and blame the model for a bug in the harness.
+    const said = (choice.content ?? "").trim();
+    if (!said) {
+      if (nudged) break;
+      nudged = true;
+      messages.push({ role: "assistant", content: choice.content ?? "" });
+      messages.push({
+        role: "user",
+        content: `Reply now with only the JSON object, containing exactly these fields: ${fields.join(", ")}.`,
+      });
+      continue;
+    }
+
+    answerText = said;
     break;
   }
 
