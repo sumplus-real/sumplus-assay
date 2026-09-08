@@ -16,6 +16,14 @@ import { verify } from "../lib/receipts";
 const root = join(import.meta.dirname, "..");
 const report = JSON.parse(readFileSync(join(root, "data", "report.json"), "utf8"));
 
+/** Optional second run of the same four assays, kept beside the first. */
+let repeat: any = null;
+try {
+  repeat = JSON.parse(readFileSync(join(root, "data", "report-2.json"), "utf8"));
+} catch {
+  repeat = null;
+}
+
 const secs = (n: number) => (n >= 100 ? `${n.toFixed(0)} s` : `${n.toFixed(1)} s`);
 const out: string[] = [];
 const w = (s = "") => out.push(s);
@@ -77,6 +85,55 @@ w(`If a model response ever arrives without a usage block, the run records that 
 w(`and prices the call from a deliberately high estimate. A missing field is never`);
 w(`read as zero cost.`);
 w();
+
+if (repeat) {
+  const pairs = runs
+    .map((first: any) => ({ first, second: repeat.runs.find((x: any) => x.result.taskId === first.result.taskId) }))
+    .filter((p: any) => p.second);
+  const t1 = pairs.reduce((a: number, p: any) => a + p.first.result.derived.agentSeconds, 0);
+  const t2 = pairs.reduce((a: number, p: any) => a + p.second.result.derived.agentSeconds, 0);
+  const both = pairs.filter((p: any) => p.first.result.agent.score >= 0.999 && p.second.result.agent.score >= 0.999).length;
+
+  w(`## Run it again`);
+  w();
+  w(`The same four assays, run a second time on ${repeat.generatedAt} against chain`);
+  w(`state that had moved on. Published beside the first run rather than replacing it,`);
+  w(`because a report that only ever shows its latest numbers cannot be asked whether`);
+  w(`the result holds.`);
+  w();
+  w(`| Category | Time run 1 | Run 2 | Cost run 1 | Run 2 | Faster run 1 | Run 2 | Matched |`);
+  w(`|---|---|---|---|---|---|---|---|`);
+  for (const p of pairs) {
+    w(
+      `| ${p.first.result.category} | ${secs(p.first.result.derived.agentSeconds)} | ${secs(p.second.result.derived.agentSeconds)} | ` +
+        `${usd(p.first.result.agent.moneyMicroUsd)} | ${usd(p.second.result.agent.moneyMicroUsd)} | ` +
+        `${p.first.result.derived.fasterBy.toFixed(1)}× | ${p.second.result.derived.fasterBy.toFixed(1)}× | ` +
+        `${(p.first.result.agent.score * 100).toFixed(0)}% / ${(p.second.result.agent.score * 100).toFixed(0)}% |`
+    );
+  }
+  w(
+    `| **Overall** | **${secs(t1)}** | **${secs(t2)}** | | | **${(humanSecs / t1).toFixed(1)}×** | ` +
+      `**${(humanSecs / t2).toFixed(1)}×** | **${both}/${pairs.length} both** |`
+  );
+  w();
+  w(`Every task reproduced the reference answer in both runs and the advantage`);
+  w(`survived, but it is not the same number twice: ${(humanSecs / t1).toFixed(1)}× became`);
+  w(`${(humanSecs / t2).toFixed(1)}× overall. Three tasks got faster. The yield scan got`);
+  w(`slower and dearer because the agent chose to sweep the market list three times`);
+  w(`instead of twice, which is a real property of hiring an agent rather than noise`);
+  w(`to be averaged away.`);
+  w();
+  w(`The health assay is the useful one to look at closely. Its reference answer`);
+  w(`changed between runs, from a borrow limit of $4.8016 to $4.8022, because the`);
+  w(`collateral is real and BNB moved underneath it. A task that returned identical`);
+  w(`numbers hours apart would be reading a fixture, not a chain.`);
+  w();
+  w(`The second run's anchors are on the same contract, which is why the chain now`);
+  w(`holds more anchors than this report has tasks. The verifier finds each assay's`);
+  w(`anchor by its hash rather than by position, so adding runs does not invalidate`);
+  w(`the ones already published.`);
+  w();
+}
 
 for (const r of runs) {
   const res = r.result;

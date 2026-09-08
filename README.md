@@ -31,6 +31,15 @@ The crossover column is the rate at which our own conclusion flips: work faster
 than that per lookup and doing it by hand wins. It is published so a reader can
 overturn the claim with their own numbers instead of taking ours.
 
+The same four assays were run again two hours later against moved chain state.
+Every task reproduced the reference answer both times and the advantage held,
+at 11.7× rather than 14.2×. Three tasks got faster; the yield scan got slower
+and dearer because the agent chose to sweep the market list three times instead
+of twice. Both runs are published side by side in
+[`REPORT.md`](REPORT.md#run-it-again) rather than the newer one replacing the
+older, and the health assay's reference answer moved between them because the
+collateral is real and BNB moved underneath it.
+
 Two figures in the human column are stated assumptions rather than measurements,
 and they appear next to every result: 20 seconds for one lookup on a block
 explorer, and $60 an hour for the person doing it. Everything else is measured.

@@ -116,8 +116,12 @@ async function runOne(task: Task, config: ReturnType<typeof modelFromEnv>) {
       result: r.result,
     })),
   };
-  writeFileSync(join(OUT_DIR, "report.json"), JSON.stringify(payload, null, 2));
-  console.log(`\nwrote data/report.json`);
+  // A second run writes beside the first rather than over it. Replacing the
+  // published report with a fresher one would quietly destroy the thing that
+  // makes a repeat run worth anything: two independent runs to compare.
+  const name = process.argv[2] ?? "report.json";
+  writeFileSync(join(OUT_DIR, name), JSON.stringify(payload, null, 2));
+  console.log(`\nwrote data/${name}`);
 })().catch((e) => {
   console.error("FAILED:", e);
   process.exit(1);

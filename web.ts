@@ -78,6 +78,20 @@ type Report = {
 
 const report: Report = JSON.parse(readFileSync(REPORT_PATH, "utf8"));
 
+/**
+ * A second run of the same four assays, hours later against moved chain state.
+ * Optional: without it the pages simply do not show the repeat section. It is
+ * kept beside the first rather than replacing it, because a report that only
+ * ever shows its latest run cannot be asked whether the result holds up.
+ */
+const repeat: Report | null = (() => {
+  try {
+    return JSON.parse(readFileSync(join(import.meta.dirname, "data", "report-2.json"), "utf8"));
+  } catch {
+    return null;
+  }
+})();
+
 // ------------------------------------------------------------- the live check
 
 type ChainCheck = { stored: string; recomputed: string; count: number; agree: boolean; at: string; error?: string };
@@ -271,6 +285,19 @@ ${rows}
 <p class="lede">The crossover column is the point at which our own conclusion flips: work faster than that per
 lookup and doing it by hand wins. It is published so a judge can overturn the claim with their own numbers rather
 than take ours.</p>
+${
+  repeat
+    ? `<p class="lede">These four were run again hours later against moved chain state. Every task reproduced the
+reference answer both times and the advantage held, though not at the same number:
+<a href="/report">the repeat run</a> came out at ${(
+        report.runs.reduce((a, r) => a + r.result.derived.humanSeconds, 0) /
+        repeat.runs.reduce((a, r) => a + r.result.derived.agentSeconds, 0)
+      ).toFixed(1)}× against ${(
+        report.runs.reduce((a, r) => a + r.result.derived.humanSeconds, 0) /
+        report.runs.reduce((a, r) => a + r.result.derived.agentSeconds, 0)
+      ).toFixed(1)}× here.</p>`
+    : ""
+}
 
 <h2>What is measured and what is assumed</h2>
 <div class="grid2">
@@ -377,6 +404,53 @@ the bytes, and compare. The recipe is on the <a href="/verify">verify page</a>.<
 <p style="margin-top:28px"><a href="/">← all four assays</a></p>`;
 }
 
+function repeatSection(): string {
+  if (!repeat) return "";
+  const pairs = report.runs
+    .map((first) => ({ first, second: repeat.runs.find((r) => r.result.taskId === first.result.taskId) }))
+    .filter((p): p is { first: Run; second: Run } => Boolean(p.second));
+  if (!pairs.length) return "";
+
+  const t1 = pairs.reduce((a, p) => a + p.first.result.derived.agentSeconds, 0);
+  const t2 = pairs.reduce((a, p) => a + p.second.result.derived.agentSeconds, 0);
+  const h = pairs.reduce((a, p) => a + p.first.result.derived.humanSeconds, 0);
+  const matchedBoth = pairs.filter((p) => p.first.result.agent.score >= 0.999 && p.second.result.agent.score >= 0.999).length;
+
+  const rows = pairs
+    .map(
+      (p) => `<tr><td>${esc(p.first.result.category)}</td>
+<td class="num">${secs(p.first.result.derived.agentSeconds)}</td>
+<td class="num">${secs(p.second.result.derived.agentSeconds)}</td>
+<td class="num">${usd(p.first.result.agent.moneyMicroUsd)}</td>
+<td class="num">${usd(p.second.result.agent.moneyMicroUsd)}</td>
+<td class="num">${p.first.result.derived.fasterBy.toFixed(1)}×</td>
+<td class="num">${p.second.result.derived.fasterBy.toFixed(1)}×</td>
+<td class="num">${(p.first.result.agent.score * 100).toFixed(0)}% / ${(p.second.result.agent.score * 100).toFixed(0)}%</td></tr>`
+    )
+    .join("");
+
+  return `
+<h2>Run it again</h2>
+<p class="lede">The same four assays, run a second time ${esc(repeat.generatedAt)} against chain state that had moved
+on. Published beside the first run rather than replacing it, because a report that only ever shows its latest
+numbers cannot be asked whether the result holds.</p>
+<div class="scroll"><table>
+<tr><th>Category</th><th class="num">Time run 1</th><th class="num">Run 2</th><th class="num">Cost run 1</th>
+<th class="num">Run 2</th><th class="num">Faster run 1</th><th class="num">Run 2</th><th class="num">Matched</th></tr>
+${rows}
+<tr><td><b>Overall</b></td><td class="num"><b>${secs(t1)}</b></td><td class="num"><b>${secs(t2)}</b></td>
+<td colspan="2"></td><td class="num"><b>${(h / t1).toFixed(1)}×</b></td><td class="num"><b>${(h / t2).toFixed(1)}×</b></td>
+<td class="num"><b>${matchedBoth}/${pairs.length} both</b></td></tr>
+</table></div>
+<p class="lede">Every task reproduced the reference answer in both runs, and the advantage survived, but it is not
+the same number twice: ${(h / t1).toFixed(1)}× became ${(h / t2).toFixed(1)}× overall. Three tasks got faster. The
+yield scan got slower and dearer because the agent chose to sweep the market list three times instead of twice,
+which is a real property of hiring an agent rather than noise to be averaged away.</p>
+<p class="lede">The health assay is the useful one to look at closely. Its reference answer changed between runs,
+from a borrow limit of $4.8016 to $4.8022, because the collateral is real and BNB moved underneath it. A task that
+returned identical numbers hours apart would be reading a fixture, not a chain.</p>`;
+}
+
 function reportPage(c: ChainCheck): string {
   const runs = report.runs;
   const rows = runs
@@ -444,6 +518,8 @@ call from a deliberately high estimate rather than reporting zero. The human cos
 ${runs[0].result.manual.lookups > 0 ? "counted lookups" : "counted steps"} multiplied by the two stated assumptions:
 ${report.runs[0].result.assumptions.secondsPerLookup} seconds per lookup and
 ${usd(report.runs[0].result.assumptions.hourlyRateUsd * 1_000_000)} an hour.</p>
+
+${repeatSection()}
 
 <h2>The four tasks</h2>
 ${detail}

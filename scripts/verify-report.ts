@@ -30,7 +30,13 @@ const pass = (msg: string) => console.log(`  ok    ${msg}`);
 
 (async () => {
   console.log(`Verifying ${path}`);
-  console.log(`Anchor contract ${ASSAY_ANCHOR} on chain ${report.chainId}\n`);
+  console.log(`Anchor contract ${ASSAY_ANCHOR} on chain ${report.chainId}`);
+
+  // Read every anchor once, up front, so each assay is looked up by content.
+  const live = await onChainHead();
+  const anchors = [];
+  for (let i = 0; i < live.count; i += 1) anchors.push(await anchorAt(i));
+  console.log(`${anchors.length} anchors read from chain\n`);
 
   for (const run of report.runs) {
     const id = run.result.taskId;
@@ -46,17 +52,20 @@ const pass = (msg: string) => console.log(`  ok    ${msg}`);
     if (v.ok) pass(`${v.length} receipts, chain intact`);
     else fail(`receipt chain broken: ${v.problems.map((p) => `${p.kind} at ${p.seq}`).join(", ")}`);
 
-    // 3. The anchor on chain for this assay, read back by index.
+    // 3. The anchor on chain for this assay, found by its hash.
+    //
+    // Deliberately a search rather than an index. Positions shift the moment
+    // anything else is anchored, and an index that quietly points at the wrong
+    // row would still find a hash and still print something reassuring.
     try {
-      const index = report.runs.indexOf(run) + (report.onChain.count - report.runs.length);
-      const onChain = await anchorAt(index);
-      if (onChain.assayHash.toLowerCase() === recomputed.toLowerCase()) {
-        pass(`anchor ${index} on chain carries this hash · ${explorerTx(run.anchor.txHash)}`);
+      const hit = anchors.findIndex((a) => a.assayHash.toLowerCase() === recomputed.toLowerCase());
+      if (hit < 0) {
+        fail(`no anchor on chain carries ${recomputed}`);
       } else {
-        fail(`anchor ${index} carries ${onChain.assayHash}, not ${recomputed}`);
-      }
-      if (onChain.category !== run.result.category) {
-        fail(`anchor ${index} is filed under "${onChain.category}", not "${run.result.category}"`);
+        pass(`anchor ${hit} of ${anchors.length} carries this hash · ${explorerTx(run.anchor.txHash)}`);
+        if (anchors[hit].category !== run.result.category) {
+          fail(`anchor ${hit} is filed under "${anchors[hit].category}", not "${run.result.category}"`);
+        }
       }
     } catch (e) {
       fail(`could not read anchor from chain: ${e instanceof Error ? e.message : String(e)}`);

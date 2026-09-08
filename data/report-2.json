@@ -1,0 +1,1431 @@
+{
+  "generatedAt": "2026-09-08T19:53:08.802Z",
+  "model": {
+    "id": "deepseek-v4-flash",
+    "provider": "cm",
+    "inputPerMillion": 0.14,
+    "outputPerMillion": 0.28
+  },
+  "contract": "0xdc3cec958Ac2bBaDA749EC4Cf49ac01507F5297B",
+  "chainId": 97,
+  "onChain": {
+    "stored": "0xd786a1f16b00ea96ab973dc3770a5c453167c0ca2cc50e7e2677463354bd4132",
+    "recomputed": "0xd786a1f16b00ea96ab973dc3770a5c453167c0ca2cc50e7e2677463354bd4132",
+    "count": 9,
+    "agree": true
+  },
+  "runs": [
+    {
+      "hash": "0x90b5fdfe0b21e6d17bbd836e651a42457249082fd03c15ea5ac6197ceaa1d19e",
+      "anchor": {
+        "txHash": "0xc58c2bf3874e84087be00ea6f8f0c28fb07a53ffc7838005ce96ddb5ea9e9fe1",
+        "blockNumber": 129889624,
+        "gasUsed": 125217,
+        "gasPriceWei": "100000000",
+        "costWei": "12521700000000",
+        "assayHash": "0x90b5fdfe0b21e6d17bbd836e651a42457249082fd03c15ea5ac6197ceaa1d19e",
+        "category": "monitoring",
+        "explorer": "https://testnet.bscscan.com/tx/0xc58c2bf3874e84087be00ea6f8f0c28fb07a53ffc7838005ce96ddb5ea9e9fe1"
+      },
+      "usageReported": true,
+      "tokens": {
+        "prompt": 2470,
+        "completion": 201
+      },
+      "chainOk": true,
+      "receipts": [
+        {
+          "seq": 0,
+          "at": "2026-09-08T19:46:47.262Z",
+          "step": "model.call",
+          "detail": "deepseek-v4-flash round 1",
+          "decision": "allowed",
+          "reason": "Within the $0.02 ceiling for this task.",
+          "costMicroUsd": 116,
+          "payloadHash": "87ad33ab40dcb3b983a680fb1fd2198529c49206ac52626d0254d5e4b26d9c56",
+          "prevHash": "0000000000000000000000000000000000000000000000000000000000000000",
+          "hash": "6e2ad5c49bdd7ea0bcf4204482c37301db5aee41e86b845e90d7a589d1a0a8d3"
+        },
+        {
+          "seq": 1,
+          "at": "2026-09-08T19:46:47.731Z",
+          "step": "tool.call",
+          "detail": "pool_state",
+          "decision": "allowed",
+          "reason": "pool_state is on the list and the call budget has room.",
+          "costMicroUsd": 0,
+          "payloadHash": "b0cf2b9221bc349d77ae5375816863c3e613c9c1f59b50e8b4899c56d64e8783",
+          "prevHash": "6e2ad5c49bdd7ea0bcf4204482c37301db5aee41e86b845e90d7a589d1a0a8d3",
+          "hash": "f3bfcc2fe124f1a0c826f43f0e43e8214406ef49f416cd433681a3fe3b1bd74a"
+        },
+        {
+          "seq": 2,
+          "at": "2026-09-08T19:46:47.956Z",
+          "step": "tool.call",
+          "detail": "recent_swaps",
+          "decision": "allowed",
+          "reason": "recent_swaps is on the list and the call budget has room.",
+          "costMicroUsd": 0,
+          "payloadHash": "74075c76e35773a10498d2b80edb2f1e3b10269427c2bbc36f8db3232a952a26",
+          "prevHash": "f3bfcc2fe124f1a0c826f43f0e43e8214406ef49f416cd433681a3fe3b1bd74a",
+          "hash": "acf4e1667b71cf4587cae32e001c9ac8092ad14475332c8f7570b979c21bd2e0"
+        },
+        {
+          "seq": 3,
+          "at": "2026-09-08T19:46:51.021Z",
+          "step": "model.call",
+          "detail": "deepseek-v4-flash round 2",
+          "decision": "allowed",
+          "reason": "Within the $0.02 ceiling for this task.",
+          "costMicroUsd": 127,
+          "payloadHash": "298082a80d03e91a8e2867b614f41f9386ffeb3af2bf395d8225d4b1e6cef593",
+          "prevHash": "acf4e1667b71cf4587cae32e001c9ac8092ad14475332c8f7570b979c21bd2e0",
+          "hash": "74d1709c4064395cb91143d9e659c206a3c52d12cda383d0862cd77ce5a1cbf5"
+        },
+        {
+          "seq": 4,
+          "at": "2026-09-08T19:46:51.243Z",
+          "step": "tool.call",
+          "detail": "pool_state",
+          "decision": "allowed",
+          "reason": "pool_state is on the list and the call budget has room.",
+          "costMicroUsd": 0,
+          "payloadHash": "b0cf2b9221bc349d77ae5375816863c3e613c9c1f59b50e8b4899c56d64e8783",
+          "prevHash": "74d1709c4064395cb91143d9e659c206a3c52d12cda383d0862cd77ce5a1cbf5",
+          "hash": "ffe43257b9d6c2aed2460ebf3a107f6aa8e969f23834de138ec24b3b3366837d"
+        },
+        {
+          "seq": 5,
+          "at": "2026-09-08T19:46:54.828Z",
+          "step": "model.call",
+          "detail": "deepseek-v4-flash round 3",
+          "decision": "allowed",
+          "reason": "Within the $0.02 ceiling for this task.",
+          "costMicroUsd": 161,
+          "payloadHash": "55acbff5077e5d79f2dda2a013cffc78e795d4e9b808de13bdc49a4c4cc05407",
+          "prevHash": "ffe43257b9d6c2aed2460ebf3a107f6aa8e969f23834de138ec24b3b3366837d",
+          "hash": "cd54a7e5c1ef233076f5dbc6bd7cd81c6d485f204e3c1363dc31b4fb3dceac39"
+        },
+        {
+          "seq": 6,
+          "at": "2026-09-08T19:46:54.828Z",
+          "step": "answer",
+          "detail": "5 fields",
+          "decision": "allowed",
+          "reason": "The agent finished and produced an answer.",
+          "costMicroUsd": 0,
+          "payloadHash": "a7dfb97559e53b84cbacac4fa82788e9e568d6c5d27566c6d8fcd47b9e7d2e45",
+          "prevHash": "cd54a7e5c1ef233076f5dbc6bd7cd81c6d485f204e3c1363dc31b4fb3dceac39",
+          "hash": "f0f3479ca5e5225fabbb9ed620ecf283a877f2f99e2c372fd8b722f9fbcc0f74"
+        }
+      ],
+      "manualSteps": [
+        {
+          "where": "BscScan testnet, factory 0x6725F303b657a9451d8BA641348b6761A6CC7a17",
+          "action": "open the contract, Read tab"
+        },
+        {
+          "where": "factory, getPair",
+          "action": "call getPair(0xae13d989daC2f0dEbFf460aC112a837C89BAa7cd, 0x78867BbEeF44f2326bF8DDd1941a4439382EF2A7)"
+        },
+        {
+          "where": "pair 0x85EcDcdd01EbE0BfD0Aba74B81Ca6d7F4A53582b",
+          "action": "open the pair contract"
+        },
+        {
+          "where": "pair, token0",
+          "action": "call token0 to learn which reserve is which"
+        },
+        {
+          "where": "pair, getReserves",
+          "action": "call getReserves and note both numbers"
+        },
+        {
+          "where": "a calculator",
+          "action": "divide both reserves by 1e18"
+        },
+        {
+          "where": "a calculator",
+          "action": "divide BUSD reserve by WBNB reserve to get the price"
+        },
+        {
+          "where": "a calculator",
+          "action": "check the price against 440 plus or minus 2%"
+        },
+        {
+          "where": "BscScan, pair Events tab",
+          "action": "filter Swap events over the last 4000 blocks and count them"
+        }
+      ],
+      "result": {
+        "taskId": "pool-watch",
+        "category": "monitoring",
+        "title": "Is the pool inside its band, and is anyone still trading it",
+        "question": "On BNB Smart Chain testnet, look at the PancakeSwap v2 BUSD/WBNB pool. Report the current price in BUSD per WBNB, whether that price is within 2% of 440, and how many trades the pool has seen in the last 4000 blocks.",
+        "at": "2026-09-08T19:46:54.829Z",
+        "reference": {
+          "price": 438.6981,
+          "reserveBusd": 5535.5597,
+          "reserveWbnb": 12.618154,
+          "withinBand": true,
+          "tradesLast4000Blocks": 0
+        },
+        "manual": {
+          "label": "manual",
+          "ms": 1051,
+          "lookups": 9,
+          "rpcCalls": 5,
+          "moneyMicroUsd": 0,
+          "score": 1,
+          "answer": {
+            "price": 438.6981,
+            "reserveBusd": 5535.5597,
+            "reserveWbnb": 12.618154,
+            "withinBand": true,
+            "tradesLast4000Blocks": 0
+          },
+          "notes": []
+        },
+        "agent": {
+          "label": "agent",
+          "ms": 11603,
+          "lookups": 3,
+          "rpcCalls": 7,
+          "moneyMicroUsd": 404,
+          "score": 1,
+          "answer": {
+            "price": 438.6981,
+            "reserveBusd": 5535.5597,
+            "reserveWbnb": 12.6182,
+            "withinBand": true,
+            "tradesLast4000Blocks": 0
+          },
+          "notes": []
+        },
+        "assumptions": {
+          "secondsPerLookup": 20,
+          "hourlyRateUsd": 60
+        },
+        "derived": {
+          "humanSeconds": 180,
+          "humanCostMicroUsd": 3000000,
+          "agentSeconds": 11.603,
+          "crossoverSecondsPerLookup": 1.2892222222222223,
+          "crossoverHourlyRateUsd": 0.00808,
+          "fasterBy": 15.51322933724037,
+          "verdict": "The agent reproduced the reference answer and got there 15.5 times faster than a person working at 20 seconds per lookup. It would take under 1.3 seconds per lookup by hand to beat it."
+        }
+      }
+    },
+    {
+      "hash": "0x3d8323922a341908e06802c8a07ce27e6005003bedcd57d42b80846afee9e682",
+      "anchor": {
+        "txHash": "0x33c0dcb2226351cc843f2f3335c8ed6c0cb958571b739adb8585d0fb122c0b22",
+        "blockNumber": 129889680,
+        "gasUsed": 125133,
+        "gasPriceWei": "100000000",
+        "costWei": "12513300000000",
+        "assayHash": "0x3d8323922a341908e06802c8a07ce27e6005003bedcd57d42b80846afee9e682",
+        "category": "grid",
+        "explorer": "https://testnet.bscscan.com/tx/0x33c0dcb2226351cc843f2f3335c8ed6c0cb958571b739adb8585d0fb122c0b22"
+      },
+      "usageReported": true,
+      "tokens": {
+        "prompt": 4300,
+        "completion": 553
+      },
+      "chainOk": true,
+      "receipts": [
+        {
+          "seq": 0,
+          "at": "2026-09-08T19:47:17.043Z",
+          "step": "model.call",
+          "detail": "deepseek-v4-flash round 1",
+          "decision": "allowed",
+          "reason": "Within the $0.02 ceiling for this task.",
+          "costMicroUsd": 134,
+          "payloadHash": "991cea230dfc2f69af63caa3a709cb6213f0b0bb88e367125a7717149f274133",
+          "prevHash": "0000000000000000000000000000000000000000000000000000000000000000",
+          "hash": "c66a055901d5f32251eda15ff9c06fe2426db99fbbf553daefdddb45edb94eda"
+        },
+        {
+          "seq": 1,
+          "at": "2026-09-08T19:47:17.600Z",
+          "step": "tool.call",
+          "detail": "pool_state",
+          "decision": "allowed",
+          "reason": "pool_state is on the list and the call budget has room.",
+          "costMicroUsd": 0,
+          "payloadHash": "b0cf2b9221bc349d77ae5375816863c3e613c9c1f59b50e8b4899c56d64e8783",
+          "prevHash": "c66a055901d5f32251eda15ff9c06fe2426db99fbbf553daefdddb45edb94eda",
+          "hash": "0dbe297688a5bd3bd6ff7092b99fedbdb11fa08bf67c5effd4a70ce9ec188d66"
+        },
+        {
+          "seq": 2,
+          "at": "2026-09-08T19:47:17.819Z",
+          "step": "tool.call",
+          "detail": "recent_swaps",
+          "decision": "allowed",
+          "reason": "recent_swaps is on the list and the call budget has room.",
+          "costMicroUsd": 0,
+          "payloadHash": "74075c76e35773a10498d2b80edb2f1e3b10269427c2bbc36f8db3232a952a26",
+          "prevHash": "0dbe297688a5bd3bd6ff7092b99fedbdb11fa08bf67c5effd4a70ce9ec188d66",
+          "hash": "f3f414bcf7fce386f590d8ce9d050821c2a3c55fc2c2db7a6c153a927a298a45"
+        },
+        {
+          "seq": 3,
+          "at": "2026-09-08T19:47:20.790Z",
+          "step": "model.call",
+          "detail": "deepseek-v4-flash round 2",
+          "decision": "allowed",
+          "reason": "Within the $0.02 ceiling for this task.",
+          "costMicroUsd": 150,
+          "payloadHash": "f8e21126fa21fb050d906eb3fce560b6ec4f686f6ef451db75924bb71da9dd86",
+          "prevHash": "f3f414bcf7fce386f590d8ce9d050821c2a3c55fc2c2db7a6c153a927a298a45",
+          "hash": "5c999a18610572627945d2027f96e1a74c540db8b2a1125b38dd5c9554bdeaac"
+        },
+        {
+          "seq": 4,
+          "at": "2026-09-08T19:47:21.109Z",
+          "step": "tool.call",
+          "detail": "recent_swaps",
+          "decision": "allowed",
+          "reason": "recent_swaps is on the list and the call budget has room.",
+          "costMicroUsd": 0,
+          "payloadHash": "74075c76e35773a10498d2b80edb2f1e3b10269427c2bbc36f8db3232a952a26",
+          "prevHash": "5c999a18610572627945d2027f96e1a74c540db8b2a1125b38dd5c9554bdeaac",
+          "hash": "127c2cc1308432a456db244bee51b4e2183290873978e530980ec37ccc05796f"
+        },
+        {
+          "seq": 5,
+          "at": "2026-09-08T19:47:32.392Z",
+          "step": "model.call",
+          "detail": "deepseek-v4-flash round 3",
+          "decision": "allowed",
+          "reason": "Within the $0.02 ceiling for this task.",
+          "costMicroUsd": 248,
+          "payloadHash": "178a7ed00189f3b7a60ea96feaa1b408f7023a9ede907a25012b5fbbe2d229e7",
+          "prevHash": "127c2cc1308432a456db244bee51b4e2183290873978e530980ec37ccc05796f",
+          "hash": "49b671f75e1c5bfcad522ce29a5903dddaf9aea8eafcd44ae509f84e6175c31b"
+        },
+        {
+          "seq": 6,
+          "at": "2026-09-08T19:47:32.987Z",
+          "step": "tool.call",
+          "detail": "recent_swaps",
+          "decision": "allowed",
+          "reason": "recent_swaps is on the list and the call budget has room.",
+          "costMicroUsd": 0,
+          "payloadHash": "74075c76e35773a10498d2b80edb2f1e3b10269427c2bbc36f8db3232a952a26",
+          "prevHash": "49b671f75e1c5bfcad522ce29a5903dddaf9aea8eafcd44ae509f84e6175c31b",
+          "hash": "f4411d7c6126307a95a4fa8388030aceed340d5a716d97eb5482e8fb78fbfcad"
+        },
+        {
+          "seq": 7,
+          "at": "2026-09-08T19:47:35.990Z",
+          "step": "model.call",
+          "detail": "deepseek-v4-flash round 4",
+          "decision": "allowed",
+          "reason": "Within the $0.02 ceiling for this task.",
+          "costMicroUsd": 226,
+          "payloadHash": "6d84d76a27b8cbcac28e5864b2c52f12477558fb42993cf2d5b2e80ba6d63c70",
+          "prevHash": "f4411d7c6126307a95a4fa8388030aceed340d5a716d97eb5482e8fb78fbfcad",
+          "hash": "7a78e59c5e01c61a2a9c4cc14c7b8b7aa5e125ea1f729b3af5e56b773af494ea"
+        },
+        {
+          "seq": 8,
+          "at": "2026-09-08T19:47:35.990Z",
+          "step": "answer",
+          "detail": "8 fields",
+          "decision": "allowed",
+          "reason": "The agent finished and produced an answer.",
+          "costMicroUsd": 0,
+          "payloadHash": "b4c9065f325eaace314e7906874a5b80ea901c0b00a1b239b5fd4ab608854d42",
+          "prevHash": "7a78e59c5e01c61a2a9c4cc14c7b8b7aa5e125ea1f729b3af5e56b773af494ea",
+          "hash": "a1d0e1f443d7a4ac8cb127bffa06cb410a0acb338a5bbf1d0582e10695069de4"
+        }
+      ],
+      "manualSteps": [
+        {
+          "where": "pair 0x85EcDcdd01EbE0BfD0Aba74B81Ca6d7F4A53582b",
+          "action": "call getReserves and token0, as in the first task"
+        },
+        {
+          "where": "a calculator",
+          "action": "derive the current price"
+        },
+        {
+          "where": "a calculator",
+          "action": "take 0.90x and 1.10x the price for the range"
+        },
+        {
+          "where": "a calculator",
+          "action": "divide the range into 8 levels and write each one out"
+        },
+        {
+          "where": "a calculator",
+          "action": "divide 2 WBNB across the levels"
+        },
+        {
+          "where": "a calculator",
+          "action": "multiply one level's size by the spacing, then subtract the 0.25% fee twice, once each way"
+        },
+        {
+          "where": "BscScan, pair Events tab",
+          "action": "count Swap events over the last 4000 blocks"
+        },
+        {
+          "where": "your own judgement",
+          "action": "decide whether that trade count can cross the grid often enough to pay"
+        }
+      ],
+      "result": {
+        "taskId": "grid-plan",
+        "category": "grid",
+        "title": "What a grid on this pool would actually earn",
+        "question": "Using the current price of the PancakeSwap v2 BUSD/WBNB pool on BNB Smart Chain testnet, plan a 8-level grid spanning 10% either side of the price, for an inventory of 2 WBNB. Levels are evenly spaced, so the spacing is the full range divided by 7. The inventory is split evenly, so each level holds 2/8 WBNB. One crossing buys at a level and sells at the next, so it earns the level size times the spacing, minus the pool's 0.25% fee charged on the level's value at the current price, once on the way in and once on the way out. Report the spacing in BUSD, the WBNB at each level, the net BUSD from one crossing, and whether this pool trades often enough for the grid to be worth running.",
+        "at": "2026-09-08T19:47:35.990Z",
+        "reference": {
+          "price": 438.6981,
+          "lowerBound": 394.8283,
+          "upperBound": 482.5679,
+          "spacingBusd": 12.5342,
+          "perLevelWbnb": 0.25,
+          "netPerCrossingBusd": 2.5852,
+          "tradesLast4000Blocks": 0,
+          "worthRunning": false
+        },
+        "manual": {
+          "label": "manual",
+          "ms": 1509,
+          "lookups": 8,
+          "rpcCalls": 5,
+          "moneyMicroUsd": 0,
+          "score": 1,
+          "answer": {
+            "price": 438.6981,
+            "lowerBound": 394.8283,
+            "upperBound": 482.5679,
+            "spacingBusd": 12.5342,
+            "perLevelWbnb": 0.25,
+            "netPerCrossingBusd": 2.5852,
+            "tradesLast4000Blocks": 0,
+            "worthRunning": false
+          },
+          "notes": []
+        },
+        "agent": {
+          "label": "agent",
+          "ms": 21749,
+          "lookups": 4,
+          "rpcCalls": 11,
+          "moneyMicroUsd": 758,
+          "score": 1,
+          "answer": {
+            "price": 438.6980758124596,
+            "lowerBound": 394.8282682312136,
+            "upperBound": 482.5678833937056,
+            "spacingBusd": 12.5342307374989,
+            "perLevelWbnb": 0.25,
+            "netPerCrossingBusd": 2.585185089609155,
+            "tradesLast4000Blocks": 0,
+            "worthRunning": false
+          },
+          "notes": []
+        },
+        "assumptions": {
+          "secondsPerLookup": 20,
+          "hourlyRateUsd": 60
+        },
+        "derived": {
+          "humanSeconds": 160,
+          "humanCostMicroUsd": 2666667,
+          "agentSeconds": 21.749,
+          "crossoverSecondsPerLookup": 2.718625,
+          "crossoverHourlyRateUsd": 0.017055,
+          "fasterBy": 7.3566600763253485,
+          "verdict": "The agent reproduced the reference answer and got there 7.4 times faster than a person working at 20 seconds per lookup. It would take under 2.7 seconds per lookup by hand to beat it."
+        }
+      }
+    },
+    {
+      "hash": "0x05a80d6c60b3c38c156f36ed422474c1f6369a71d84e5358688d149f6ccae9dd",
+      "anchor": {
+        "txHash": "0x412d95d22ce31102642ee5cb68962c188ddef1f39dcf0bf4885440f8e3812ea0",
+        "blockNumber": 129889759,
+        "gasUsed": 125169,
+        "gasPriceWei": "100000000",
+        "costWei": "12516900000000",
+        "assayHash": "0x05a80d6c60b3c38c156f36ed422474c1f6369a71d84e5358688d149f6ccae9dd",
+        "category": "health",
+        "explorer": "https://testnet.bscscan.com/tx/0x412d95d22ce31102642ee5cb68962c188ddef1f39dcf0bf4885440f8e3812ea0"
+      },
+      "usageReported": true,
+      "tokens": {
+        "prompt": 3030,
+        "completion": 500
+      },
+      "chainOk": true,
+      "receipts": [
+        {
+          "seq": 0,
+          "at": "2026-09-08T19:47:40.491Z",
+          "step": "model.call",
+          "detail": "deepseek-v4-flash round 1",
+          "decision": "allowed",
+          "reason": "Within the $0.02 ceiling for this task.",
+          "costMicroUsd": 127,
+          "payloadHash": "e136d282bdd44fb12eadee355e5d1ecf3abcff2be837a1323d492929be1f8c07",
+          "prevHash": "0000000000000000000000000000000000000000000000000000000000000000",
+          "hash": "201ea41fac61327de558eee931aeb8df9bfca19cd6fe414e2b73530c142fca53"
+        },
+        {
+          "seq": 1,
+          "at": "2026-09-08T19:47:42.076Z",
+          "step": "tool.call",
+          "detail": "account_liquidity",
+          "decision": "allowed",
+          "reason": "account_liquidity is on the list and the call budget has room.",
+          "costMicroUsd": 0,
+          "payloadHash": "ecfcb9a8280e72091ba7c2f05d42ce06b07da88a52e56b561bfb7c20e7647539",
+          "prevHash": "201ea41fac61327de558eee931aeb8df9bfca19cd6fe414e2b73530c142fca53",
+          "hash": "3fc5227d6c316fb6aa46fce43a68ddb3a21227479ff7f177fea382c7db62c2c3"
+        },
+        {
+          "seq": 2,
+          "at": "2026-09-08T19:47:45.209Z",
+          "step": "model.call",
+          "detail": "deepseek-v4-flash round 2",
+          "decision": "allowed",
+          "reason": "Within the $0.02 ceiling for this task.",
+          "costMicroUsd": 162,
+          "payloadHash": "095fd895f2dd31ae78500c94052097721b3f32a5d843f447fc13502e3a6df351",
+          "prevHash": "3fc5227d6c316fb6aa46fce43a68ddb3a21227479ff7f177fea382c7db62c2c3",
+          "hash": "da5cc1bb97b43bbf483a6f76a2b2065592bf05c9cf126d659ce51135645f53fd"
+        },
+        {
+          "seq": 3,
+          "at": "2026-09-08T19:47:46.367Z",
+          "step": "tool.call",
+          "detail": "account_liquidity",
+          "decision": "allowed",
+          "reason": "account_liquidity is on the list and the call budget has room.",
+          "costMicroUsd": 0,
+          "payloadHash": "ecfcb9a8280e72091ba7c2f05d42ce06b07da88a52e56b561bfb7c20e7647539",
+          "prevHash": "da5cc1bb97b43bbf483a6f76a2b2065592bf05c9cf126d659ce51135645f53fd",
+          "hash": "2fc4ddba456cb13a0370e5edfaeb807314d61451fd7afbb9f8837b2754f9d412"
+        },
+        {
+          "seq": 4,
+          "at": "2026-09-08T19:47:55.684Z",
+          "step": "model.call",
+          "detail": "deepseek-v4-flash round 3",
+          "decision": "allowed",
+          "reason": "Within the $0.02 ceiling for this task.",
+          "costMicroUsd": 277,
+          "payloadHash": "cd57060561298d6fc059f190676d4c23c3e236c7e0a253f8a5753845ab576d2f",
+          "prevHash": "2fc4ddba456cb13a0370e5edfaeb807314d61451fd7afbb9f8837b2754f9d412",
+          "hash": "10fe4186bc07eb1db2f04b5f049bbcc65ee04d5f760d0d478edf911ef9cc78d4"
+        },
+        {
+          "seq": 5,
+          "at": "2026-09-08T19:47:55.684Z",
+          "step": "answer",
+          "detail": "6 fields",
+          "decision": "allowed",
+          "reason": "The agent finished and produced an answer.",
+          "costMicroUsd": 0,
+          "payloadHash": "7812b099ac84b808fe3a783f7284a648937178e76cf7fe8e13df7dd1b8d81270",
+          "prevHash": "10fe4186bc07eb1db2f04b5f049bbcc65ee04d5f760d0d478edf911ef9cc78d4",
+          "hash": "c66b999ddc24856779ebd69ed8ac4f99f525b4ef9328db6b95e48d5f32dd19a6"
+        }
+      ],
+      "manualSteps": [
+        {
+          "where": "BscScan testnet, comptroller 0x94d1820b2D1c7c7452A163983Dc888CEC546b77D",
+          "action": "open the contract, Read tab"
+        },
+        {
+          "where": "comptroller, getAccountLiquidity",
+          "action": "call it with 0x5B5183A1Dd146A178C641ABdAced49199A54daCE and note liquidity and shortfall"
+        },
+        {
+          "where": "vFDUSD 0xF06e662a00796c122AaAE935EC4F0Be3F74f5636",
+          "action": "open the borrowed market's contract"
+        },
+        {
+          "where": "vFDUSD, borrowBalanceStored",
+          "action": "call it with 0x5B5183A1Dd146A178C641ABdAced49199A54daCE"
+        },
+        {
+          "where": "a calculator",
+          "action": "divide by 1e18 to get the borrowed amount"
+        },
+        {
+          "where": "a calculator",
+          "action": "add liquidity and borrowed to get the borrow limit"
+        },
+        {
+          "where": "a calculator",
+          "action": "divide the borrow limit by the borrowed amount for the health factor"
+        },
+        {
+          "where": "a calculator",
+          "action": "subtract the reciprocal of the health factor from one for the fall it can take"
+        }
+      ],
+      "result": {
+        "taskId": "health-factor",
+        "category": "health",
+        "title": "How far this loan is from trouble",
+        "question": "On Venus on BNB Smart Chain testnet, look at account 0x5B5183A1Dd146A178C641ABdAced49199A54daCE. Report its remaining borrow capacity in dollars and how much it has borrowed in dollars. Its borrow limit is the remaining capacity plus what is already borrowed, and its health factor is that borrow limit divided by what is borrowed. Report both, and report how far the collateral price can fall before the position becomes liquidatable, which is one minus the reciprocal of the health factor, as a percentage.",
+        "at": "2026-09-08T19:47:55.684Z",
+        "reference": {
+          "borrowLimitUsd": 4.8022,
+          "borrowedUsd": 2.4,
+          "remainingUsd": 2.4022,
+          "shortfallUsd": 0,
+          "healthFactor": 2.0009,
+          "collateralFallToLiquidationPct": 50.02
+        },
+        "manual": {
+          "label": "manual",
+          "ms": 316,
+          "lookups": 8,
+          "rpcCalls": 2,
+          "moneyMicroUsd": 0,
+          "score": 1,
+          "answer": {
+            "borrowLimitUsd": 4.8022,
+            "borrowedUsd": 2.4,
+            "remainingUsd": 2.4022,
+            "shortfallUsd": 0,
+            "healthFactor": 2.0009,
+            "collateralFallToLiquidationPct": 50.02
+          },
+          "notes": []
+        },
+        "agent": {
+          "label": "agent",
+          "ms": 17343,
+          "lookups": 2,
+          "rpcCalls": 28,
+          "moneyMicroUsd": 566,
+          "score": 1,
+          "answer": {
+            "borrowLimitUsd": 4.802215728782493,
+            "borrowedUsd": 2.4,
+            "remainingUsd": 2.402215728782493,
+            "shortfallUsd": 0,
+            "healthFactor": 2.000923220326039,
+            "collateralFallToLiquidationPct": 50.0231
+          },
+          "notes": []
+        },
+        "assumptions": {
+          "secondsPerLookup": 20,
+          "hourlyRateUsd": 60
+        },
+        "derived": {
+          "humanSeconds": 160,
+          "humanCostMicroUsd": 2666667,
+          "agentSeconds": 17.343,
+          "crossoverSecondsPerLookup": 2.167875,
+          "crossoverHourlyRateUsd": 0.012735,
+          "fasterBy": 9.225624171135328,
+          "verdict": "The agent reproduced the reference answer and got there 9.2 times faster than a person working at 20 seconds per lookup. It would take under 2.2 seconds per lookup by hand to beat it."
+        }
+      }
+    },
+    {
+      "hash": "0xcd1c70ce646fcf441e183e34d901d696d57bf2d7688b34f524cc80bdb0a63f57",
+      "anchor": {
+        "txHash": "0xc36133f849ae5cb3710a14bc47c7694021afbe7417b90ee9aab19afefea7cd17",
+        "blockNumber": 129890414,
+        "gasUsed": 125157,
+        "gasPriceWei": "100000000",
+        "costWei": "12515700000000",
+        "assayHash": "0xcd1c70ce646fcf441e183e34d901d696d57bf2d7688b34f524cc80bdb0a63f57",
+        "category": "yield",
+        "explorer": "https://testnet.bscscan.com/tx/0xc36133f849ae5cb3710a14bc47c7694021afbe7417b90ee9aab19afefea7cd17"
+      },
+      "usageReported": true,
+      "tokens": {
+        "prompt": 33999,
+        "completion": 4804
+      },
+      "chainOk": true,
+      "receipts": [
+        {
+          "seq": 0,
+          "at": "2026-09-08T19:48:44.904Z",
+          "step": "model.call",
+          "detail": "deepseek-v4-flash round 1",
+          "decision": "allowed",
+          "reason": "Within the $0.02 ceiling for this task.",
+          "costMicroUsd": 114,
+          "payloadHash": "5217e810d2ffb1149635ecb49741984453ab79f7fbe1c291ba4c716b04b0f9be",
+          "prevHash": "0000000000000000000000000000000000000000000000000000000000000000",
+          "hash": "215d234403594bb9e054bab2978afba0208437931ff704c6a0e02c4d311803d6"
+        },
+        {
+          "seq": 1,
+          "at": "2026-09-08T19:49:18.266Z",
+          "step": "tool.call",
+          "detail": "venus_markets",
+          "decision": "allowed",
+          "reason": "venus_markets is on the list and the call budget has room.",
+          "costMicroUsd": 0,
+          "payloadHash": "b0cf2b9221bc349d77ae5375816863c3e613c9c1f59b50e8b4899c56d64e8783",
+          "prevHash": "215d234403594bb9e054bab2978afba0208437931ff704c6a0e02c4d311803d6",
+          "hash": "16d6176b00064c8bc63c91d1e9e1f043e7e85fd95271fde3d168e9388133ceb7"
+        },
+        {
+          "seq": 2,
+          "at": "2026-09-08T19:51:09.206Z",
+          "step": "model.call",
+          "detail": "deepseek-v4-flash round 2",
+          "decision": "allowed",
+          "reason": "Within the $0.02 ceiling for this task.",
+          "costMicroUsd": 1565,
+          "payloadHash": "fd5d688022ded568a75378fa204d86c4b6cc695dc30d341f5e7e401d6f5b9740",
+          "prevHash": "16d6176b00064c8bc63c91d1e9e1f043e7e85fd95271fde3d168e9388133ceb7",
+          "hash": "8d1dc2cbab68a19360a7169157e34e375b4e79ff4d615ec9c27037754c2bc17e"
+        },
+        {
+          "seq": 3,
+          "at": "2026-09-08T19:51:32.719Z",
+          "step": "tool.call",
+          "detail": "venus_markets",
+          "decision": "allowed",
+          "reason": "venus_markets is on the list and the call budget has room.",
+          "costMicroUsd": 0,
+          "payloadHash": "b0cf2b9221bc349d77ae5375816863c3e613c9c1f59b50e8b4899c56d64e8783",
+          "prevHash": "8d1dc2cbab68a19360a7169157e34e375b4e79ff4d615ec9c27037754c2bc17e",
+          "hash": "4d9a4be7565787e2111c9b574965832dd7844d92b18e0817d3650430621afb6a"
+        },
+        {
+          "seq": 4,
+          "at": "2026-09-08T19:51:52.300Z",
+          "step": "model.call",
+          "detail": "deepseek-v4-flash round 3",
+          "decision": "allowed",
+          "reason": "Within the $0.02 ceiling for this task.",
+          "costMicroUsd": 1994,
+          "payloadHash": "0b94a83849f3f65b477ecef01de8bade47b2ef6c462fbd0390e0f539d1a76e52",
+          "prevHash": "4d9a4be7565787e2111c9b574965832dd7844d92b18e0817d3650430621afb6a",
+          "hash": "93a3baa96125db50f8f870737464acdc6a01670126839f37dbfbad699ae65c6d"
+        },
+        {
+          "seq": 5,
+          "at": "2026-09-08T19:52:37.935Z",
+          "step": "tool.call",
+          "detail": "venus_markets",
+          "decision": "allowed",
+          "reason": "venus_markets is on the list and the call budget has room.",
+          "costMicroUsd": 0,
+          "payloadHash": "b0cf2b9221bc349d77ae5375816863c3e613c9c1f59b50e8b4899c56d64e8783",
+          "prevHash": "93a3baa96125db50f8f870737464acdc6a01670126839f37dbfbad699ae65c6d",
+          "hash": "a9f8ece5455ea608a14945d66857ebdb5767d537dcde6347629bf18da7992507"
+        },
+        {
+          "seq": 6,
+          "at": "2026-09-08T19:52:50.301Z",
+          "step": "model.call",
+          "detail": "deepseek-v4-flash round 4",
+          "decision": "allowed",
+          "reason": "Within the $0.02 ceiling for this task.",
+          "costMicroUsd": 2435,
+          "payloadHash": "e0ceeef5b6770ec9b77a0e25954880b95dfcb91087bff45100379b32640d13f3",
+          "prevHash": "a9f8ece5455ea608a14945d66857ebdb5767d537dcde6347629bf18da7992507",
+          "hash": "90040cd457756b0ec7594792dbc114f01b414b0c7b03c6490028ffb6ea9af42d"
+        },
+        {
+          "seq": 7,
+          "at": "2026-09-08T19:52:50.302Z",
+          "step": "answer",
+          "detail": "9 fields",
+          "decision": "allowed",
+          "reason": "The agent finished and produced an answer.",
+          "costMicroUsd": 0,
+          "payloadHash": "6f4ae1572239b17b7a0cb3e49f7edde8a42e459fbcc56e94d41d0c7a2f28dfd0",
+          "prevHash": "90040cd457756b0ec7594792dbc114f01b414b0c7b03c6490028ffb6ea9af42d",
+          "hash": "1c4412cec504e939f31669afbfdadf5150a5bf79c371e2b53945dfa58c7ee0b6"
+        }
+      ],
+      "manualSteps": [
+        {
+          "where": "comptroller 0x94d1820b2D1c7c7452A163983Dc888CEC546b77D",
+          "action": "call getAllMarkets and copy out every address"
+        },
+        {
+          "where": "vToken 0xD5C4C2e2facBEB59D0216D0595d63FcDc6F9A1a7",
+          "action": "open it and read symbol, supplyRatePerBlock, getCash"
+        },
+        {
+          "where": "comptroller, markets(0xD5C4C2e2facBEB59D0216D0595d63FcDc6F9A1a7)",
+          "action": "read the collateral factor and whether it is listed"
+        },
+        {
+          "where": "comptroller, actionPaused(0xD5C4C2e2facBEB59D0216D0595d63FcDc6F9A1a7, 0)",
+          "action": "check whether supplying is paused"
+        },
+        {
+          "where": "vToken 0xb7526572FFE56AB9D7489838Bf2E18e3323b441A",
+          "action": "open it and read symbol, supplyRatePerBlock, getCash"
+        },
+        {
+          "where": "comptroller, markets(0xb7526572FFE56AB9D7489838Bf2E18e3323b441A)",
+          "action": "read the collateral factor and whether it is listed"
+        },
+        {
+          "where": "comptroller, actionPaused(0xb7526572FFE56AB9D7489838Bf2E18e3323b441A, 0)",
+          "action": "check whether supplying is paused"
+        },
+        {
+          "where": "vToken 0x08e0A5575De71037aE36AbfAfb516595fE68e5e4",
+          "action": "open it and read symbol, supplyRatePerBlock, getCash"
+        },
+        {
+          "where": "comptroller, markets(0x08e0A5575De71037aE36AbfAfb516595fE68e5e4)",
+          "action": "read the collateral factor and whether it is listed"
+        },
+        {
+          "where": "comptroller, actionPaused(0x08e0A5575De71037aE36AbfAfb516595fE68e5e4, 0)",
+          "action": "check whether supplying is paused"
+        },
+        {
+          "where": "vToken 0x74469281310195A04840Daf6EdF576F559a3dE80",
+          "action": "open it and read symbol, supplyRatePerBlock, getCash"
+        },
+        {
+          "where": "comptroller, markets(0x74469281310195A04840Daf6EdF576F559a3dE80)",
+          "action": "read the collateral factor and whether it is listed"
+        },
+        {
+          "where": "comptroller, actionPaused(0x74469281310195A04840Daf6EdF576F559a3dE80, 0)",
+          "action": "check whether supplying is paused"
+        },
+        {
+          "where": "vToken 0x2E7222e51c0f6e98610A1543Aa3836E092CDe62c",
+          "action": "open it and read symbol, supplyRatePerBlock, getCash"
+        },
+        {
+          "where": "comptroller, markets(0x2E7222e51c0f6e98610A1543Aa3836E092CDe62c)",
+          "action": "read the collateral factor and whether it is listed"
+        },
+        {
+          "where": "comptroller, actionPaused(0x2E7222e51c0f6e98610A1543Aa3836E092CDe62c, 0)",
+          "action": "check whether supplying is paused"
+        },
+        {
+          "where": "vToken 0x6d6F697e34145Bb95c54E77482d97cc261Dc237E",
+          "action": "open it and read symbol, supplyRatePerBlock, getCash"
+        },
+        {
+          "where": "comptroller, markets(0x6d6F697e34145Bb95c54E77482d97cc261Dc237E)",
+          "action": "read the collateral factor and whether it is listed"
+        },
+        {
+          "where": "comptroller, actionPaused(0x6d6F697e34145Bb95c54E77482d97cc261Dc237E, 0)",
+          "action": "check whether supplying is paused"
+        },
+        {
+          "where": "vToken 0x162D005F0Fff510E54958Cfc5CF32A3180A84aab",
+          "action": "open it and read symbol, supplyRatePerBlock, getCash"
+        },
+        {
+          "where": "comptroller, markets(0x162D005F0Fff510E54958Cfc5CF32A3180A84aab)",
+          "action": "read the collateral factor and whether it is listed"
+        },
+        {
+          "where": "comptroller, actionPaused(0x162D005F0Fff510E54958Cfc5CF32A3180A84aab, 0)",
+          "action": "check whether supplying is paused"
+        },
+        {
+          "where": "vToken 0xAfc13BC065ABeE838540823431055D2ea52eBA52",
+          "action": "open it and read symbol, supplyRatePerBlock, getCash"
+        },
+        {
+          "where": "comptroller, markets(0xAfc13BC065ABeE838540823431055D2ea52eBA52)",
+          "action": "read the collateral factor and whether it is listed"
+        },
+        {
+          "where": "comptroller, actionPaused(0xAfc13BC065ABeE838540823431055D2ea52eBA52, 0)",
+          "action": "check whether supplying is paused"
+        },
+        {
+          "where": "vToken 0x488aB2826a154da01CC4CC16A8C83d4720D3cA2C",
+          "action": "open it and read symbol, supplyRatePerBlock, getCash"
+        },
+        {
+          "where": "comptroller, markets(0x488aB2826a154da01CC4CC16A8C83d4720D3cA2C)",
+          "action": "read the collateral factor and whether it is listed"
+        },
+        {
+          "where": "comptroller, actionPaused(0x488aB2826a154da01CC4CC16A8C83d4720D3cA2C, 0)",
+          "action": "check whether supplying is paused"
+        },
+        {
+          "where": "vToken 0xb6e9322C49FD75a367Fcb17B0Fcd62C5070EbCBe",
+          "action": "open it and read symbol, supplyRatePerBlock, getCash"
+        },
+        {
+          "where": "comptroller, markets(0xb6e9322C49FD75a367Fcb17B0Fcd62C5070EbCBe)",
+          "action": "read the collateral factor and whether it is listed"
+        },
+        {
+          "where": "comptroller, actionPaused(0xb6e9322C49FD75a367Fcb17B0Fcd62C5070EbCBe, 0)",
+          "action": "check whether supplying is paused"
+        },
+        {
+          "where": "vToken 0x37C28DE42bA3d22217995D146FC684B2326Ede64",
+          "action": "open it and read symbol, supplyRatePerBlock, getCash"
+        },
+        {
+          "where": "comptroller, markets(0x37C28DE42bA3d22217995D146FC684B2326Ede64)",
+          "action": "read the collateral factor and whether it is listed"
+        },
+        {
+          "where": "comptroller, actionPaused(0x37C28DE42bA3d22217995D146FC684B2326Ede64, 0)",
+          "action": "check whether supplying is paused"
+        },
+        {
+          "where": "vToken 0xF912d3001CAf6DC4ADD366A62Cc9115B4303c9A9",
+          "action": "open it and read symbol, supplyRatePerBlock, getCash"
+        },
+        {
+          "where": "comptroller, markets(0xF912d3001CAf6DC4ADD366A62Cc9115B4303c9A9)",
+          "action": "read the collateral factor and whether it is listed"
+        },
+        {
+          "where": "comptroller, actionPaused(0xF912d3001CAf6DC4ADD366A62Cc9115B4303c9A9, 0)",
+          "action": "check whether supplying is paused"
+        },
+        {
+          "where": "vToken 0xeDaC03D29ff74b5fDc0CC936F6288312e1459BC6",
+          "action": "open it and read symbol, supplyRatePerBlock, getCash"
+        },
+        {
+          "where": "comptroller, markets(0xeDaC03D29ff74b5fDc0CC936F6288312e1459BC6)",
+          "action": "read the collateral factor and whether it is listed"
+        },
+        {
+          "where": "comptroller, actionPaused(0xeDaC03D29ff74b5fDc0CC936F6288312e1459BC6, 0)",
+          "action": "check whether supplying is paused"
+        },
+        {
+          "where": "vToken 0x3619bdDc61189F33365CC572DF3a68FB3b316516",
+          "action": "open it and read symbol, supplyRatePerBlock, getCash"
+        },
+        {
+          "where": "comptroller, markets(0x3619bdDc61189F33365CC572DF3a68FB3b316516)",
+          "action": "read the collateral factor and whether it is listed"
+        },
+        {
+          "where": "comptroller, actionPaused(0x3619bdDc61189F33365CC572DF3a68FB3b316516, 0)",
+          "action": "check whether supplying is paused"
+        },
+        {
+          "where": "vToken 0x714db6c38A17883964B68a07d56cE331501d9eb6",
+          "action": "open it and read symbol, supplyRatePerBlock, getCash"
+        },
+        {
+          "where": "comptroller, markets(0x714db6c38A17883964B68a07d56cE331501d9eb6)",
+          "action": "read the collateral factor and whether it is listed"
+        },
+        {
+          "where": "comptroller, actionPaused(0x714db6c38A17883964B68a07d56cE331501d9eb6, 0)",
+          "action": "check whether supplying is paused"
+        },
+        {
+          "where": "vToken 0x3A00d9B02781f47d033BAd62edc55fBF8D083Fb0",
+          "action": "open it and read symbol, supplyRatePerBlock, getCash"
+        },
+        {
+          "where": "comptroller, markets(0x3A00d9B02781f47d033BAd62edc55fBF8D083Fb0)",
+          "action": "read the collateral factor and whether it is listed"
+        },
+        {
+          "where": "comptroller, actionPaused(0x3A00d9B02781f47d033BAd62edc55fBF8D083Fb0, 0)",
+          "action": "check whether supplying is paused"
+        },
+        {
+          "where": "vToken 0x369Fea97f6fB7510755DCA389088d9E2e2819278",
+          "action": "open it and read symbol, supplyRatePerBlock, getCash"
+        },
+        {
+          "where": "comptroller, markets(0x369Fea97f6fB7510755DCA389088d9E2e2819278)",
+          "action": "read the collateral factor and whether it is listed"
+        },
+        {
+          "where": "comptroller, actionPaused(0x369Fea97f6fB7510755DCA389088d9E2e2819278, 0)",
+          "action": "check whether supplying is paused"
+        },
+        {
+          "where": "vToken 0xF206af85BC2761c4F876d27Bd474681CfB335EfA",
+          "action": "open it and read symbol, supplyRatePerBlock, getCash"
+        },
+        {
+          "where": "comptroller, markets(0xF206af85BC2761c4F876d27Bd474681CfB335EfA)",
+          "action": "read the collateral factor and whether it is listed"
+        },
+        {
+          "where": "comptroller, actionPaused(0xF206af85BC2761c4F876d27Bd474681CfB335EfA, 0)",
+          "action": "check whether supplying is paused"
+        },
+        {
+          "where": "vToken 0x9C3015191d39cF1930F92EB7e7BCbd020bCA286a",
+          "action": "open it and read symbol, supplyRatePerBlock, getCash"
+        },
+        {
+          "where": "comptroller, markets(0x9C3015191d39cF1930F92EB7e7BCbd020bCA286a)",
+          "action": "read the collateral factor and whether it is listed"
+        },
+        {
+          "where": "comptroller, actionPaused(0x9C3015191d39cF1930F92EB7e7BCbd020bCA286a, 0)",
+          "action": "check whether supplying is paused"
+        },
+        {
+          "where": "vToken 0x6AF3Fdb3282c5bb6926269Db10837fa8Aec67C04",
+          "action": "open it and read symbol, supplyRatePerBlock, getCash"
+        },
+        {
+          "where": "comptroller, markets(0x6AF3Fdb3282c5bb6926269Db10837fa8Aec67C04)",
+          "action": "read the collateral factor and whether it is listed"
+        },
+        {
+          "where": "comptroller, actionPaused(0x6AF3Fdb3282c5bb6926269Db10837fa8Aec67C04, 0)",
+          "action": "check whether supplying is paused"
+        },
+        {
+          "where": "vToken 0x35566ED3AF9E537Be487C98b1811cDf95ad0C32b",
+          "action": "open it and read symbol, supplyRatePerBlock, getCash"
+        },
+        {
+          "where": "comptroller, markets(0x35566ED3AF9E537Be487C98b1811cDf95ad0C32b)",
+          "action": "read the collateral factor and whether it is listed"
+        },
+        {
+          "where": "comptroller, actionPaused(0x35566ED3AF9E537Be487C98b1811cDf95ad0C32b, 0)",
+          "action": "check whether supplying is paused"
+        },
+        {
+          "where": "vToken 0xEFAACF73CE2D38ED40991f29E72B12C74bd4cf23",
+          "action": "open it and read symbol, supplyRatePerBlock, getCash"
+        },
+        {
+          "where": "comptroller, markets(0xEFAACF73CE2D38ED40991f29E72B12C74bd4cf23)",
+          "action": "read the collateral factor and whether it is listed"
+        },
+        {
+          "where": "comptroller, actionPaused(0xEFAACF73CE2D38ED40991f29E72B12C74bd4cf23, 0)",
+          "action": "check whether supplying is paused"
+        },
+        {
+          "where": "vToken 0x171B468b52d7027F12cEF90cd065d6776a25E24e",
+          "action": "open it and read symbol, supplyRatePerBlock, getCash"
+        },
+        {
+          "where": "comptroller, markets(0x171B468b52d7027F12cEF90cd065d6776a25E24e)",
+          "action": "read the collateral factor and whether it is listed"
+        },
+        {
+          "where": "comptroller, actionPaused(0x171B468b52d7027F12cEF90cd065d6776a25E24e, 0)",
+          "action": "check whether supplying is paused"
+        },
+        {
+          "where": "vToken 0xF06e662a00796c122AaAE935EC4F0Be3F74f5636",
+          "action": "open it and read symbol, supplyRatePerBlock, getCash"
+        },
+        {
+          "where": "comptroller, markets(0xF06e662a00796c122AaAE935EC4F0Be3F74f5636)",
+          "action": "read the collateral factor and whether it is listed"
+        },
+        {
+          "where": "comptroller, actionPaused(0xF06e662a00796c122AaAE935EC4F0Be3F74f5636, 0)",
+          "action": "check whether supplying is paused"
+        },
+        {
+          "where": "vToken 0xA38110ae4451A86ab754695057d5B5a9BEAd0387",
+          "action": "open it and read symbol, supplyRatePerBlock, getCash"
+        },
+        {
+          "where": "comptroller, markets(0xA38110ae4451A86ab754695057d5B5a9BEAd0387)",
+          "action": "read the collateral factor and whether it is listed"
+        },
+        {
+          "where": "comptroller, actionPaused(0xA38110ae4451A86ab754695057d5B5a9BEAd0387, 0)",
+          "action": "check whether supplying is paused"
+        },
+        {
+          "where": "vToken 0x95DaED37fdD3F557b3A5cCEb7D50Be65b36721DF",
+          "action": "open it and read symbol, supplyRatePerBlock, getCash"
+        },
+        {
+          "where": "comptroller, markets(0x95DaED37fdD3F557b3A5cCEb7D50Be65b36721DF)",
+          "action": "read the collateral factor and whether it is listed"
+        },
+        {
+          "where": "comptroller, actionPaused(0x95DaED37fdD3F557b3A5cCEb7D50Be65b36721DF, 0)",
+          "action": "check whether supplying is paused"
+        },
+        {
+          "where": "vToken 0x39A239F5117BFaC7a1b0b3A517c454113323451d",
+          "action": "open it and read symbol, supplyRatePerBlock, getCash"
+        },
+        {
+          "where": "comptroller, markets(0x39A239F5117BFaC7a1b0b3A517c454113323451d)",
+          "action": "read the collateral factor and whether it is listed"
+        },
+        {
+          "where": "comptroller, actionPaused(0x39A239F5117BFaC7a1b0b3A517c454113323451d, 0)",
+          "action": "check whether supplying is paused"
+        },
+        {
+          "where": "vToken 0xbd9EB061444665Df7282Ec0888b72D60aC41Eb8C",
+          "action": "open it and read symbol, supplyRatePerBlock, getCash"
+        },
+        {
+          "where": "comptroller, markets(0xbd9EB061444665Df7282Ec0888b72D60aC41Eb8C)",
+          "action": "read the collateral factor and whether it is listed"
+        },
+        {
+          "where": "comptroller, actionPaused(0xbd9EB061444665Df7282Ec0888b72D60aC41Eb8C, 0)",
+          "action": "check whether supplying is paused"
+        },
+        {
+          "where": "vToken 0x9447b1D4Bd192f25416B6aCc3B7f06be2f7D6309",
+          "action": "open it and read symbol, supplyRatePerBlock, getCash"
+        },
+        {
+          "where": "comptroller, markets(0x9447b1D4Bd192f25416B6aCc3B7f06be2f7D6309)",
+          "action": "read the collateral factor and whether it is listed"
+        },
+        {
+          "where": "comptroller, actionPaused(0x9447b1D4Bd192f25416B6aCc3B7f06be2f7D6309, 0)",
+          "action": "check whether supplying is paused"
+        },
+        {
+          "where": "vToken 0x90535B06ddB00453a5e5f2bC094d498F1cc86032",
+          "action": "open it and read symbol, supplyRatePerBlock, getCash"
+        },
+        {
+          "where": "comptroller, markets(0x90535B06ddB00453a5e5f2bC094d498F1cc86032)",
+          "action": "read the collateral factor and whether it is listed"
+        },
+        {
+          "where": "comptroller, actionPaused(0x90535B06ddB00453a5e5f2bC094d498F1cc86032, 0)",
+          "action": "check whether supplying is paused"
+        },
+        {
+          "where": "vToken 0x8c8A1a0b6e1cb8058037F7bF24de6b79Aca5B7B0",
+          "action": "open it and read symbol, supplyRatePerBlock, getCash"
+        },
+        {
+          "where": "comptroller, markets(0x8c8A1a0b6e1cb8058037F7bF24de6b79Aca5B7B0)",
+          "action": "read the collateral factor and whether it is listed"
+        },
+        {
+          "where": "comptroller, actionPaused(0x8c8A1a0b6e1cb8058037F7bF24de6b79Aca5B7B0, 0)",
+          "action": "check whether supplying is paused"
+        },
+        {
+          "where": "vToken 0x86f8DfB7CA84455174EE9C3edd94867b51Da46BD",
+          "action": "open it and read symbol, supplyRatePerBlock, getCash"
+        },
+        {
+          "where": "comptroller, markets(0x86f8DfB7CA84455174EE9C3edd94867b51Da46BD)",
+          "action": "read the collateral factor and whether it is listed"
+        },
+        {
+          "where": "comptroller, actionPaused(0x86f8DfB7CA84455174EE9C3edd94867b51Da46BD, 0)",
+          "action": "check whether supplying is paused"
+        },
+        {
+          "where": "vToken 0x519e61D2CDA04184FB086bbD2322C1bfEa0917Cf",
+          "action": "open it and read symbol, supplyRatePerBlock, getCash"
+        },
+        {
+          "where": "comptroller, markets(0x519e61D2CDA04184FB086bbD2322C1bfEa0917Cf)",
+          "action": "read the collateral factor and whether it is listed"
+        },
+        {
+          "where": "comptroller, actionPaused(0x519e61D2CDA04184FB086bbD2322C1bfEa0917Cf, 0)",
+          "action": "check whether supplying is paused"
+        },
+        {
+          "where": "vToken 0x97cB97B05697c377C0bd09feDce67DBd86B7aB1e",
+          "action": "open it and read symbol, supplyRatePerBlock, getCash"
+        },
+        {
+          "where": "comptroller, markets(0x97cB97B05697c377C0bd09feDce67DBd86B7aB1e)",
+          "action": "read the collateral factor and whether it is listed"
+        },
+        {
+          "where": "comptroller, actionPaused(0x97cB97B05697c377C0bd09feDce67DBd86B7aB1e, 0)",
+          "action": "check whether supplying is paused"
+        },
+        {
+          "where": "vToken 0x73F506Aefd5e169D48Ea21A373B9B0a200E37585",
+          "action": "open it and read symbol, supplyRatePerBlock, getCash"
+        },
+        {
+          "where": "comptroller, markets(0x73F506Aefd5e169D48Ea21A373B9B0a200E37585)",
+          "action": "read the collateral factor and whether it is listed"
+        },
+        {
+          "where": "comptroller, actionPaused(0x73F506Aefd5e169D48Ea21A373B9B0a200E37585, 0)",
+          "action": "check whether supplying is paused"
+        },
+        {
+          "where": "vToken 0x140d5Da2cE9fb9A8725cabdDB2Fe8ea831342C78",
+          "action": "open it and read symbol, supplyRatePerBlock, getCash"
+        },
+        {
+          "where": "comptroller, markets(0x140d5Da2cE9fb9A8725cabdDB2Fe8ea831342C78)",
+          "action": "read the collateral factor and whether it is listed"
+        },
+        {
+          "where": "comptroller, actionPaused(0x140d5Da2cE9fb9A8725cabdDB2Fe8ea831342C78, 0)",
+          "action": "check whether supplying is paused"
+        },
+        {
+          "where": "vToken 0xd9E77847ec815E56ae2B9E69596C69b6972b0B1C",
+          "action": "open it and read symbol, supplyRatePerBlock, getCash"
+        },
+        {
+          "where": "comptroller, markets(0xd9E77847ec815E56ae2B9E69596C69b6972b0B1C)",
+          "action": "read the collateral factor and whether it is listed"
+        },
+        {
+          "where": "comptroller, actionPaused(0xd9E77847ec815E56ae2B9E69596C69b6972b0B1C, 0)",
+          "action": "check whether supplying is paused"
+        },
+        {
+          "where": "vToken 0x86a94290f2B8295daA3e53bA1286f2Ff21199143",
+          "action": "open it and read symbol, supplyRatePerBlock, getCash"
+        },
+        {
+          "where": "comptroller, markets(0x86a94290f2B8295daA3e53bA1286f2Ff21199143)",
+          "action": "read the collateral factor and whether it is listed"
+        },
+        {
+          "where": "comptroller, actionPaused(0x86a94290f2B8295daA3e53bA1286f2Ff21199143, 0)",
+          "action": "check whether supplying is paused"
+        },
+        {
+          "where": "vToken 0xaB5504A3cde0d8253E8F981D663c7Ff7128B3e56",
+          "action": "open it and read symbol, supplyRatePerBlock, getCash"
+        },
+        {
+          "where": "comptroller, markets(0xaB5504A3cde0d8253E8F981D663c7Ff7128B3e56)",
+          "action": "read the collateral factor and whether it is listed"
+        },
+        {
+          "where": "comptroller, actionPaused(0xaB5504A3cde0d8253E8F981D663c7Ff7128B3e56, 0)",
+          "action": "check whether supplying is paused"
+        },
+        {
+          "where": "vToken 0x93969F17d4c1C7B22000eA26D5C2766E0f616D90",
+          "action": "open it and read symbol, supplyRatePerBlock, getCash"
+        },
+        {
+          "where": "comptroller, markets(0x93969F17d4c1C7B22000eA26D5C2766E0f616D90)",
+          "action": "read the collateral factor and whether it is listed"
+        },
+        {
+          "where": "comptroller, actionPaused(0x93969F17d4c1C7B22000eA26D5C2766E0f616D90, 0)",
+          "action": "check whether supplying is paused"
+        },
+        {
+          "where": "vToken 0xCd5A0037ebfC4a22A755923bB5C983947FaBdCe7",
+          "action": "open it and read symbol, supplyRatePerBlock, getCash"
+        },
+        {
+          "where": "comptroller, markets(0xCd5A0037ebfC4a22A755923bB5C983947FaBdCe7)",
+          "action": "read the collateral factor and whether it is listed"
+        },
+        {
+          "where": "comptroller, actionPaused(0xCd5A0037ebfC4a22A755923bB5C983947FaBdCe7, 0)",
+          "action": "check whether supplying is paused"
+        },
+        {
+          "where": "vToken 0xc93CBF6CA7F3124737F2f4daDa8dBBC7be56d125",
+          "action": "open it and read symbol, supplyRatePerBlock, getCash"
+        },
+        {
+          "where": "comptroller, markets(0xc93CBF6CA7F3124737F2f4daDa8dBBC7be56d125)",
+          "action": "read the collateral factor and whether it is listed"
+        },
+        {
+          "where": "comptroller, actionPaused(0xc93CBF6CA7F3124737F2f4daDa8dBBC7be56d125, 0)",
+          "action": "check whether supplying is paused"
+        },
+        {
+          "where": "vToken 0x3Ed56f6937fc8549f9325405d1e8E650739647Fa",
+          "action": "open it and read symbol, supplyRatePerBlock, getCash"
+        },
+        {
+          "where": "comptroller, markets(0x3Ed56f6937fc8549f9325405d1e8E650739647Fa)",
+          "action": "read the collateral factor and whether it is listed"
+        },
+        {
+          "where": "comptroller, actionPaused(0x3Ed56f6937fc8549f9325405d1e8E650739647Fa, 0)",
+          "action": "check whether supplying is paused"
+        },
+        {
+          "where": "vToken 0x9e1ECb2671AfabE9eaAA2e74Cb2318a9b6A2Eb5d",
+          "action": "open it and read symbol, supplyRatePerBlock, getCash"
+        },
+        {
+          "where": "comptroller, markets(0x9e1ECb2671AfabE9eaAA2e74Cb2318a9b6A2Eb5d)",
+          "action": "read the collateral factor and whether it is listed"
+        },
+        {
+          "where": "comptroller, actionPaused(0x9e1ECb2671AfabE9eaAA2e74Cb2318a9b6A2Eb5d, 0)",
+          "action": "check whether supplying is paused"
+        },
+        {
+          "where": "vToken 0x05B2EC5B7437FB188175bf440e3EB36af79fe319",
+          "action": "open it and read symbol, supplyRatePerBlock, getCash"
+        },
+        {
+          "where": "comptroller, markets(0x05B2EC5B7437FB188175bf440e3EB36af79fe319)",
+          "action": "read the collateral factor and whether it is listed"
+        },
+        {
+          "where": "comptroller, actionPaused(0x05B2EC5B7437FB188175bf440e3EB36af79fe319, 0)",
+          "action": "check whether supplying is paused"
+        },
+        {
+          "where": "vToken 0x101843eAbA6b98fbF4bba078b86EFdE62DF0fc16",
+          "action": "open it and read symbol, supplyRatePerBlock, getCash"
+        },
+        {
+          "where": "comptroller, markets(0x101843eAbA6b98fbF4bba078b86EFdE62DF0fc16)",
+          "action": "read the collateral factor and whether it is listed"
+        },
+        {
+          "where": "comptroller, actionPaused(0x101843eAbA6b98fbF4bba078b86EFdE62DF0fc16, 0)",
+          "action": "check whether supplying is paused"
+        },
+        {
+          "where": "vToken 0xb846eEbaC8b014296709dc660Bfcb6ea182718e8",
+          "action": "open it and read symbol, supplyRatePerBlock, getCash"
+        },
+        {
+          "where": "comptroller, markets(0xb846eEbaC8b014296709dc660Bfcb6ea182718e8)",
+          "action": "read the collateral factor and whether it is listed"
+        },
+        {
+          "where": "comptroller, actionPaused(0xb846eEbaC8b014296709dc660Bfcb6ea182718e8, 0)",
+          "action": "check whether supplying is paused"
+        },
+        {
+          "where": "vToken 0xc9cc8D6F8dE76943B8f34C8aA730A0e892322f28",
+          "action": "open it and read symbol, supplyRatePerBlock, getCash"
+        },
+        {
+          "where": "comptroller, markets(0xc9cc8D6F8dE76943B8f34C8aA730A0e892322f28)",
+          "action": "read the collateral factor and whether it is listed"
+        },
+        {
+          "where": "comptroller, actionPaused(0xc9cc8D6F8dE76943B8f34C8aA730A0e892322f28, 0)",
+          "action": "check whether supplying is paused"
+        },
+        {
+          "where": "vToken 0xa7CB7C1cf9C31fC077Fd7c6dEa30119Bec796f1D",
+          "action": "open it and read symbol, supplyRatePerBlock, getCash"
+        },
+        {
+          "where": "comptroller, markets(0xa7CB7C1cf9C31fC077Fd7c6dEa30119Bec796f1D)",
+          "action": "read the collateral factor and whether it is listed"
+        },
+        {
+          "where": "comptroller, actionPaused(0xa7CB7C1cf9C31fC077Fd7c6dEa30119Bec796f1D, 0)",
+          "action": "check whether supplying is paused"
+        },
+        {
+          "where": "a calculator",
+          "action": "compound each per-block rate over a year of BNB Chain blocks"
+        },
+        {
+          "where": "a spreadsheet",
+          "action": "sort the usable markets and read off the top one"
+        }
+      ],
+      "result": {
+        "taskId": "yield-move",
+        "category": "yield",
+        "title": "Where the money should sit instead",
+        "question": "Across every market listed on the Venus comptroller on BNB Smart Chain testnet, find the highest supply APY that a lender could actually use: the market must have cash available, must not have supplying paused, and must be usable as collateral. Report that market, its APY, the APY of vUSDT as a baseline, and what 1000 dollars would earn in a year in each.",
+        "at": "2026-09-08T19:52:50.302Z",
+        "reference": {
+          "bestSymbol": "vBNB",
+          "bestVToken": "0x2E7222e51c0f6e98610A1543Aa3836E092CDe62c",
+          "bestSupplyApy": 23.52,
+          "baselineSymbol": "vUSDT",
+          "baselineSupplyApy": 0,
+          "marketsConsidered": 49,
+          "marketsUsable": 25,
+          "bestYearOn1000Usd": 235.23,
+          "baselineYearOn1000Usd": 0
+        },
+        "manual": {
+          "label": "manual",
+          "ms": 28499,
+          "lookups": 150,
+          "rpcCalls": 322,
+          "moneyMicroUsd": 0,
+          "score": 1,
+          "answer": {
+            "bestSymbol": "vBNB",
+            "bestVToken": "0x2E7222e51c0f6e98610A1543Aa3836E092CDe62c",
+            "bestSupplyApy": 23.52,
+            "baselineSymbol": "vUSDT",
+            "baselineSupplyApy": 0,
+            "marketsConsidered": 49,
+            "marketsUsable": 25,
+            "bestYearOn1000Usd": 235.23,
+            "baselineYearOn1000Usd": 0
+          },
+          "notes": []
+        },
+        "agent": {
+          "label": "agent",
+          "ms": 247740,
+          "lookups": 3,
+          "rpcCalls": 1032,
+          "moneyMicroUsd": 6108,
+          "score": 1,
+          "answer": {
+            "bestSymbol": "vBNB",
+            "bestVToken": "0x2E7222e51c0f6e98610A1543Aa3836E092CDe62c",
+            "bestSupplyApy": 23.52,
+            "baselineSymbol": "vUSDT",
+            "baselineSupplyApy": 0,
+            "marketsConsidered": 49,
+            "marketsUsable": 25,
+            "bestYearOn1000Usd": 235.2,
+            "baselineYearOn1000Usd": 0
+          },
+          "notes": []
+        },
+        "assumptions": {
+          "secondsPerLookup": 20,
+          "hourlyRateUsd": 60
+        },
+        "derived": {
+          "humanSeconds": 3000,
+          "humanCostMicroUsd": 50000000,
+          "agentSeconds": 247.74,
+          "crossoverSecondsPerLookup": 1.6516,
+          "crossoverHourlyRateUsd": 0.0073296,
+          "fasterBy": 12.10946960523129,
+          "verdict": "The agent reproduced the reference answer and got there 12.1 times faster than a person working at 20 seconds per lookup. It would take under 1.7 seconds per lookup by hand to beat it."
+        }
+      }
+    }
+  ]
+}

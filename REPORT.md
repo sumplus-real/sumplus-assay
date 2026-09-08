@@ -40,6 +40,38 @@ If a model response ever arrives without a usage block, the run records that fac
 and prices the call from a deliberately high estimate. A missing field is never
 read as zero cost.
 
+## Run it again
+
+The same four assays, run a second time on 2026-09-08T19:53:08.802Z against chain
+state that had moved on. Published beside the first run rather than replacing it,
+because a report that only ever shows its latest numbers cannot be asked whether
+the result holds.
+
+| Category | Time run 1 | Run 2 | Cost run 1 | Run 2 | Faster run 1 | Run 2 | Matched |
+|---|---|---|---|---|---|---|---|
+| monitoring | 30.1 s | 11.6 s | $0.000404 | $0.000404 | 6.0× | 15.5× | 100% / 100% |
+| grid | 45.2 s | 21.7 s | $0.000892 | $0.000758 | 3.5× | 7.4× | 100% / 100% |
+| health | 65.9 s | 17.3 s | $0.000583 | $0.000566 | 2.4× | 9.2× | 100% / 100% |
+| yield | 105 s | 248 s | $0.002332 | $0.006108 | 28.5× | 12.1× | 100% / 100% |
+| **Overall** | **247 s** | **298 s** | | | **14.2×** | **11.7×** | **4/4 both** |
+
+Every task reproduced the reference answer in both runs and the advantage
+survived, but it is not the same number twice: 14.2× became
+11.7× overall. Three tasks got faster. The yield scan got
+slower and dearer because the agent chose to sweep the market list three times
+instead of twice, which is a real property of hiring an agent rather than noise
+to be averaged away.
+
+The health assay is the useful one to look at closely. Its reference answer
+changed between runs, from a borrow limit of $4.8016 to $4.8022, because the
+collateral is real and BNB moved underneath it. A task that returned identical
+numbers hours apart would be reading a fixture, not a chain.
+
+The second run's anchors are on the same contract, which is why the chain now
+holds more anchors than this report has tasks. The verifier finds each assay's
+anchor by its hash rather than by position, so adding runs does not invalidate
+the ones already published.
+
 ## monitoring · Is the pool inside its band, and is anyone still trading it
 
 **Question.** On BNB Smart Chain testnet, look at the PancakeSwap v2 BUSD/WBNB pool. Report the current price in BUSD per WBNB, whether that price is within 2% of 440, and how many trades the pool has seen in the last 4000 blocks.
