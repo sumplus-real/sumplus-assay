@@ -112,6 +112,20 @@ the chain, while the other three keep passing:
 npx tsx scripts/verify-report.ts tampered.json
 ```
 
+The contract can also be read straight off a public node, without this repo and
+without a block explorer. `head()` is what the contract stored as it went and
+`recomputeHead()` walks every anchor and rebuilds it; they must return the same
+32 bytes:
+
+```
+curl -s https://bsc-testnet-rpc.publicnode.com -H 'content-type: application/json' \
+  -d '{"jsonrpc":"2.0","id":1,"method":"eth_call","params":[{
+       "to":"0xdc3cec958Ac2bBaDA749EC4Cf49ac01507F5297B",
+       "data":"0x8f7dcfa3"},"latest"]}'      # head()
+                                             # 0xba3e9592 recomputeHead()
+                                             # 0x06661abd count()
+```
+
 ## Running it again
 
 ```

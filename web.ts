@@ -463,9 +463,18 @@ function verifyPage(c: ChainCheck): string {
 <h2>1. The anchors are on chain and consistent</h2>
 ${chainBanner(c)}
 <p class="lede">Call <code>head()</code> and <code>recomputeHead()</code> on
-<a class="mono" href="${explorerAddress(ASSAY_ANCHOR)}">${ASSAY_ANCHOR}</a> from any explorer. The first returns the
-value the contract stored as it went. The second walks every anchor and rebuilds it. A stored head that nobody
-recomputes proves nothing, which is the whole reason the second function exists.</p>
+<a class="mono" href="${explorerAddress(ASSAY_ANCHOR)}">${ASSAY_ANCHOR}</a>. The first returns the value the contract
+stored as it went. The second walks every anchor and rebuilds it. A stored head that nobody recomputes proves
+nothing, which is the whole reason the second function exists.</p>
+<p class="lede">Against any public node, without this site and without an explorer:</p>
+<pre>curl -s https://bsc-testnet-rpc.publicnode.com -H 'content-type: application/json' \\
+  -d '{"jsonrpc":"2.0","id":1,"method":"eth_call","params":[{
+       "to":"${ASSAY_ANCHOR}",
+       "data":"0x8f7dcfa3"},"latest"]}'   # head()
+
+# same call with 0xba3e9592 is recomputeHead(), and 0x06661abd is count()</pre>
+<p class="lede">The two must return the same 32 bytes. They currently do, and this page says so above by making
+those calls itself.</p>
 
 <h2>2. The report hashes to what was anchored</h2>
 <p class="lede">Take one assay from <a href="/api/report.json">the report JSON</a>, canonicalise it with sorted keys
