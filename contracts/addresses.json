@@ -1,0 +1,16 @@
+{
+  "chainId": 97,
+  "network": "BNB Smart Chain testnet",
+  "AssayAnchor": {
+    "address": "0xdc3cec958Ac2bBaDA749EC4Cf49ac01507F5297B",
+    "deployTx": "0xd511ea747f031de84b3e4243c2e80567006c49e259374a3eca48601ec455391e",
+    "explorer": "https://testnet.bscscan.com/address/0xdc3cec958Ac2bBaDA749EC4Cf49ac01507F5297B"
+  },
+  "reads": {
+    "pancakeV2Factory": "0x6725F303b657a9451d8BA641348b6761A6CC7a17",
+    "pairBusdWbnb": "0x85EcDcdd01EbE0BfD0Aba74B81Ca6d7F4A53582b",
+    "venusComptroller": "0x94d1820b2D1c7c7452A163983Dc888CEC546b77D",
+    "wbnb": "0xae13d989daC2f0dEbFf460aC112a837C89BAa7cd",
+    "busd": "0x78867BbEeF44f2326bF8DDd1941a4439382EF2A7"
+  }
+}
