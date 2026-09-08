@@ -5,6 +5,31 @@ and puts the difference on chain.
 
 Built for **BNB Chain Build the Era**, aimed at the **TermiX** challenge.
 
+**Live report:** https://sumplus-assay-production.up.railway.app
+· [the report itself](https://sumplus-assay-production.up.railway.app/report)
+· [how to check it](https://sumplus-assay-production.up.railway.app/verify)
+
+**Anchor contract:** [`0xdc3cec958Ac2bBaDA749EC4Cf49ac01507F5297B`](https://testnet.bscscan.com/address/0xdc3cec958Ac2bBaDA749EC4Cf49ac01507F5297B)
+on BNB Smart Chain testnet · **Demo:** `media/assay-demo.mp4`
+
+## What the measured run says
+
+|  | by hand | agent | matched | faster | crossover |
+|---|---|---|---|---|---|
+| Monitoring | 180 s · $3.00 | 30.1 s · $0.000404 | 100% | 6.0× | 3.3 s/lookup |
+| Grid trading | 160 s · $2.666667 | 45.2 s · $0.000892 | 100% | 3.5× | 5.7 s/lookup |
+| Health factor | 160 s · $2.666667 | 65.9 s · $0.000583 | 100% | 2.4× | 8.2 s/lookup |
+| Yield | 3000 s · $50.00 | 105.3 s · $0.002332 | 100% | 28.5× | 0.7 s/lookup |
+| **Total** | **3500 s · $58.333334** | **246.6 s · $0.004211** | **4/4** | **14.2×** | |
+
+The crossover column is the rate at which our own conclusion flips: work faster
+than that per lookup and doing it by hand wins. It is published so a reader can
+overturn the claim with their own numbers instead of taking ours.
+
+Two figures in the human column are stated assumptions rather than measurements,
+and they appear next to every result: 20 seconds for one lookup on a block
+explorer, and $60 an hour for the person doing it. Everything else is measured.
+
 ## The question this answers
 
 Every agent marketplace tells you an agent is good. None of them tell you it was
@@ -59,6 +84,38 @@ because an advantage shown in one category says nothing about the others.
 
 BNB Smart Chain testnet, chain id 97. Nothing here touches mainnet and nothing
 here moves real money.
+
+## Checking it yourself
+
+```
+npm install
+npm run verify     # recompute every hash, read every anchor back off chain
+npm test           # 14 tests, including the ones that prove the checks have teeth
+```
+
+`npm run verify` recomputes each assay hash from the numbers in the report,
+rebuilds each receipt chain from scratch, reads each anchor back off chain by
+index, and compares the contract's stored head against the head it rebuilds on
+request. Nothing stored in the report is carried forward as an assumption,
+which is the only thing separating a check from a recital.
+
+Point it at an edited copy to see it work. Changing the yield task's "28.5×
+faster" to "99.9×" makes that assay fail twice, once locally and once against
+the chain, while the other three keep passing:
+
+```
+npx tsx scripts/verify-report.ts tampered.json
+```
+
+## Running it again
+
+```
+npm run assay      # both paths, four tasks, four fresh anchors
+npm start          # serve the report on :8080
+```
+
+Re-running needs a funded testnet wallet in `.env` and a gateway key. The
+published report stands on its own without either.
 
 ## Licence
 

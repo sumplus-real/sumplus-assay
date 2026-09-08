@@ -1,14 +1,18 @@
 {
-  "name": "bnb",
+  "name": "sumplus-assay",
   "version": "1.0.0",
-  "main": "index.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+  "description": "Agent advantage, measured against a manual baseline and anchored on BNB Smart Chain",
+  "license": "MIT",
+  "type": "module",
+  "engines": {
+    "node": ">=22"
   },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
-  "description": "",
+  "scripts": {
+    "start": "tsx web.ts",
+    "test": "tsx --test tests/assay.test.ts",
+    "assay": "tsx scripts/run-assays.ts",
+    "verify": "tsx scripts/verify-report.ts"
+  },
   "dependencies": {
     "@types/node": "^26.5.0",
     "ethers": "^6.17.0",
