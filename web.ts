@@ -95,14 +95,33 @@ const repeat: Report | null = (() => {
 // ------------------------------------------------------------- the live check
 
 type ChainCheck = { stored: string; recomputed: string; count: number; agree: boolean; at: string; error?: string };
-let chainCache: { at: number; value: ChainCheck } | null = null;
+let chainCache: { at: number; ttl: number; value: ChainCheck } | null = null;
+let inFlight: Promise<ChainCheck> | null = null;
 
-async function chainCheck(): Promise<ChainCheck> {
-  if (chainCache && Date.now() - chainCache.at < CHAIN_CACHE_MS) return chainCache.value;
+/**
+ * Read the chain, but never make a visitor wait on it.
+ *
+ * The transport underneath retries across three endpoints, so a testnet having
+ * a bad minute can take a minute and a half to admit it. That is the right
+ * behaviour for a run that is anchoring a result and the wrong behaviour for a
+ * page someone opened. Past this deadline the page says the chain could not be
+ * read, which is what actually happened, rather than holding the request open.
+ */
+const CHAIN_DEADLINE_MS = 8000;
+
+/** A failed read is retried soon; a good one stands for the full cache window. */
+const CHAIN_FAIL_CACHE_MS = 15_000;
+
+async function readChain(): Promise<ChainCheck> {
   try {
-    const head = await onChainHead();
+    const head = await Promise.race([
+      onChainHead(),
+      new Promise<never>((_, reject) =>
+        setTimeout(() => reject(new Error(`chain read exceeded ${CHAIN_DEADLINE_MS}ms`)), CHAIN_DEADLINE_MS),
+      ),
+    ]);
     const value = { ...head, at: new Date().toISOString() };
-    chainCache = { at: Date.now(), value };
+    chainCache = { at: Date.now(), ttl: CHAIN_CACHE_MS, value };
     return value;
   } catch (e) {
     // A read failure is reported as a read failure. It is not an agreement.
@@ -114,10 +133,25 @@ async function chainCheck(): Promise<ChainCheck> {
       at: new Date().toISOString(),
       error: e instanceof Error ? e.message : String(e),
     };
-    chainCache = { at: Date.now(), value };
+    chainCache = { at: Date.now(), ttl: CHAIN_FAIL_CACHE_MS, value };
     return value;
   }
 }
+
+async function chainCheck(): Promise<ChainCheck> {
+  if (chainCache && Date.now() - chainCache.at < chainCache.ttl) return chainCache.value;
+  // Concurrent visitors share one read rather than each starting their own.
+  if (!inFlight) inFlight = readChain().finally(() => (inFlight = null));
+  return inFlight;
+}
+
+/**
+ * Keep the cached read fresh in the background, so the cost of talking to the
+ * chain is paid off-request. The value a visitor sees is still a real read of
+ * the last two minutes; it is only the waiting that has been moved.
+ */
+void chainCheck();
+setInterval(() => void chainCheck(), CHAIN_CACHE_MS - 10_000).unref();
 
 // ------------------------------------------------------------------ rendering
 
