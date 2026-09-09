@@ -10,7 +10,7 @@ Built for **BNB Chain Build the Era**, aimed at the **TermiX** challenge.
 · [how to check it](https://sumplus-assay-production.up.railway.app/verify)
 
 **Anchor contract:** [`0xdc3cec958Ac2bBaDA749EC4Cf49ac01507F5297B`](https://testnet.bscscan.com/address/0xdc3cec958Ac2bBaDA749EC4Cf49ac01507F5297B)
-on BNB Smart Chain testnet · **Demo:** `media/assay-demo.mp4`
+on BNB Smart Chain testnet · **Demo:** [two-minute walkthrough](media/assay-demo.mp4)
 
 The Agent Advantage Report is committed as [`REPORT.md`](REPORT.md), with every
 task's answer printed field by field on both paths, the receipts behind each agent
